@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/mint/CLionProjects/AirlineTicketSales/cmake-build-debug",
-		"source" : "/home/mint/CLionProjects/AirlineTicketSales"
+		"build" : "/home/mint/CLionProjects/AirlineTicketSaless/cmake-build-debug",
+		"source" : "/home/mint/CLionProjects/AirlineTicketSaless"
 	},
 	"version" : 
 	{
