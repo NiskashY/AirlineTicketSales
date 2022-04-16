@@ -1,0 +1,14 @@
+# ninja log v5
+242	303	1650112865518318036	AirlineTicketSales	36d5dbfa8dfac554
+1	242	1650112865458320189	CMakeFiles/AirlineTicketSales.dir/main.cpp.o	a86af8d355699b3f
+0	689	1650111470909881256	CMakeFiles/AirlineTicketSales.dir/data/date.cpp.o	3f4f0616bac8d8c2
+0	16	1650115061606718013	build.ninja	1d4be68b879d6ad3
+1	220	1650112409752191671	CMakeFiles/AirlineTicketSales.dir/data/flight.cpp.o	1c3252670c482ffa
+1	608	1650111850501087723	CMakeFiles/AirlineTicketSales.dir/data/tickets.cpp.o	4ab74cfea0359a47
+7	683	1650111850577755491	CMakeFiles/AirlineTicketSales.dir/data/airplane.cpp.o	3d71758f97781641
+1	17	1650112865234994868	CMakeFiles/AirlineTicketSales.dir/user/admin.cpp.o	a81879df875c6389
+1	15	1650112865231661655	CMakeFiles/AirlineTicketSales.dir/user/standard_user.cpp.o	979390e21f55b3c4
+0	252	1650117145098887177	CMakeFiles/AirlineTicketSales.dir/user/admin.cpp.o	a81879df875c6389
+1	339	1650117145188904661	CMakeFiles/AirlineTicketSales.dir/user/user.cpp.o	d6de4f7224f78721
+1	368	1650117145215576508	CMakeFiles/AirlineTicketSales.dir/user/standard_user.cpp.o	979390e21f55b3c4
+368	525	1650117145365605648	AirlineTicketSales	804ee6941d1c66f6
