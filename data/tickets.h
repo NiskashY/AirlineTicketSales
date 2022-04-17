@@ -1,5 +1,13 @@
+/*
+ *
+ * TODO сделать проверки на ввод некорректных данных
+ *
+ */
+
 #pragma once
 #include <string>
+#include <iostream>
+#include "../check_num.h"
 
 class Tickets {
 private:
@@ -23,4 +31,16 @@ public:
     int getAvailableInEconomy() const;
 
     int getPriceOfEconomy() const;
+
+    void setAvailableInBusiness(int availableInBusiness);
+
+    void setPriceOfBusiness(int priceOfBusiness);
+
+    void setAvailableInEconomy(int availableInEconomy);
+
+    void setPriceOfEconomy(int priceOfEconomy);
+
+    friend std::istream &operator>>(std::istream &in, Tickets &tickets);
 };
+
+std::istream &operator>>(std::istream &in, Tickets &tickets);

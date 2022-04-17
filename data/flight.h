@@ -1,3 +1,8 @@
+/*
+ *
+ * TODO: сделать проверки на ввод некорректных данных
+ *
+ */
 #pragma once
 
 #include "airplane.h"
@@ -19,5 +24,10 @@ public:
 
     const std::string &getDestination() const;
 
+    void setFlightNumber(const std::string &flightNumber);
+
+    void setDestination(const std::string &destination);
+
 };
 
+Flight CreateFlight();
