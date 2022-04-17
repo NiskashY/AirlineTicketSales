@@ -5,6 +5,7 @@
  */
 #pragma once
 
+#include <iomanip>
 #include "airplane.h"
 #include "date.h"
 #include "tickets.h"
@@ -28,6 +29,15 @@ public:
 
     void setDestination(const std::string &destination);
 
+    friend std::ostream &operator<<(std::ostream &file, const Flight &flight);
+
+    friend std::istream &operator>>(std::istream &file, Flight &flight);
+
+    void ShowFlight() const;
 };
+
+std::ostream& operator<<(std::ostream& file, const Flight& flight);
+
+std::istream& operator>>(std::istream& file, Flight& flight);
 
 Flight CreateFlight();

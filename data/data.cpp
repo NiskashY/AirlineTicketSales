@@ -1,15 +1,14 @@
 #include "data.h"
 
 void AddFlight(const Flight &flight) {
-    const std::string kFileName = "database.txt";
-    std::ofstream file(kFileName, std::ios::binary | std::ios::out);
+    const std::string kFileName = "flights_database.txt";
+    std::ofstream file(kFileName, std::ios::app);
 
     if (!file.is_open()) {
         std::cerr << '\n' << "NOT OPENED" << '\n';
     }
 
-    file.write((char *) &flight, sizeof(Flight));
-    //file << "!!!!";
+    file << flight << '\n';
     file.close();
 }
 
@@ -21,8 +20,17 @@ void AddSeveralFlights(int &amount) {
     }
 }
 
-void ReadFromFile(const std::string& kFileName = "database.txt") {
+std::vector<Flight> ReadFromFile(const std::string& kFileName) {
+    std::ifstream out (kFileName, std::ios::in);
+    std::vector<Flight> all_available_flights;
 
-    // Файл database.txt находится в папке cmake-build-debug
+    while(!out.eof()) {
+        Flight tmp;
+        out >> tmp;
+        all_available_flights.push_back(tmp);
+    }
 
+    out.close();
+
+    return all_available_flights;
 }

@@ -9,7 +9,7 @@
 #include "../check_num.h"
 
 class Airplane {
-private:
+protected:
     std::string type_;
     int capacity_ = 0;
 
@@ -28,6 +28,7 @@ public:
     void setCapacity(int capacity);
 
     friend std::istream& operator>> (std::istream& in, Airplane& airplane);
+
 };
 
 std::istream& operator>> (std::istream& in, Airplane& airplane);

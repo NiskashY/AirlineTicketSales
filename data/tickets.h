@@ -10,7 +10,7 @@
 #include "../check_num.h"
 
 class Tickets {
-private:
+protected:
     int available_in_business_ = 0;
     int price_of_business_ = 0;
     int available_in_economy_ = 0;

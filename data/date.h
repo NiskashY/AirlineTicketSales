@@ -8,7 +8,7 @@
 #include "../check_num.h"
 
 class Date {
-private:
+protected:
     std::string departure_date_;
     std::string departure_time_;
     std::string arrival_time_;
