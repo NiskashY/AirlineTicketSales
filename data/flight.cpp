@@ -1,42 +1,5 @@
 #include "flight.h"
 
-const std::string &Flight::getFlightNumber() const {
-    return flight_number_;
-}
-
-const std::string &Flight::getDestination() const {
-    return destination_;
-}
-
-void Flight::setFlightNumber(const std::string &flightNumber) {
-    flight_number_ = flightNumber;
-}
-
-void Flight::setDestination(const std::string &destination) {
-    destination_ = destination;
-}
-
-void Flight::ShowFlight() const {
-    const int kTimeLength = 8;
-    const int kNumbLength = 7;
-    const int kDateLength = 13;
-    const int kWordLength = 15;
-
-    std::cout << std::fixed << std::left
-              << std::setw(kWordLength) << destination_
-              << std::setw(kNumbLength) << flight_number_
-              << std::setw(kWordLength) << type_
-              << std::setw(kNumbLength) << capacity_
-              << std::setw(kDateLength) << departure_date_
-              << std::setw(kTimeLength) << departure_time_
-              << std::setw(kTimeLength) << arrival_time_
-              << std::setw(kNumbLength) << available_in_business_
-              << std::setw(kNumbLength) << price_of_business_
-              << std::setw(kNumbLength) << available_in_economy_
-              << std::setw(kNumbLength) << price_of_economy_ << '\n';
-
-}
-
 Flight CreateFlight() {
     Airplane airplane;
     Date date;
@@ -55,21 +18,33 @@ Flight CreateFlight() {
     return {flight_number, destination, airplane, date, tickets};
 }
 
-std::ostream &operator<<(std::ostream &out, const Flight &flight) {
 
-    out << flight.destination_ << ' ' << flight.flight_number_ << ' ' << flight.type_ << ' ' << flight.capacity_ << ' '
-              << flight.departure_date_ << ' ' << flight.departure_time_ << ' '  << flight.arrival_time_ << ' '
-              << flight.available_in_business_ << ' ' << flight.price_of_business_ << ' ' << flight.available_in_economy_ << ' '
-              << flight.price_of_economy_;
+std::ostream &operator<<(std::ostream &out, const Flight &flight) {
+    const int kTimeLength = 8;
+    const int kNumbLength = 7;
+    const int kDateLength = 13;
+    const int kWordLength = 15;
+
+    out << std::fixed
+        << std::setw(kWordLength) << flight.destination_
+        << std::setw(kNumbLength) << flight.flight_number_
+        << std::setw(kWordLength) << flight.airplane_.type_
+        << std::setw(kNumbLength) << flight.airplane_.capacity_
+        << std::setw(kDateLength) << flight.date_.departure_date_
+        << std::setw(kTimeLength) << flight.date_.departure_time_
+        << std::setw(kTimeLength) << flight.date_.arrival_time_
+        << std::setw(kNumbLength) << flight.tickets_.available_in_business_
+        << std::setw(kNumbLength) << flight.tickets_.price_of_business_
+        << std::setw(kNumbLength) << flight.tickets_.available_in_economy_
+        << std::setw(kNumbLength) << flight.tickets_.price_of_economy_;
 
     return out;
 }
 
 std::istream &operator>>(std::istream &in, Flight &flight) {
 
-    in >> flight.destination_ >> flight.flight_number_  >> flight.type_ >> flight.capacity_
-        >> flight.departure_date_ >> flight.departure_time_ >> flight.arrival_time_ >> flight.available_in_business_
-        >> flight.price_of_business_ >> flight.available_in_economy_ >> flight.price_of_economy_;
+    in >> flight.destination_ >> flight.flight_number_
+       >> flight.airplane_ >> flight.date_ >> flight.tickets_;
 
     return in;
 }

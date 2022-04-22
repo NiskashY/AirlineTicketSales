@@ -1,14 +1,9 @@
-#include "data.h"
+#include "reader.h"
 
 void AddFlight(const Flight &flight) {
     const std::string kFileName = "flights_database.txt";
     std::ofstream file(kFileName, std::ios::app);
-
-    if (!file.is_open()) {
-        std::cerr << '\n' << "NOT OPENED" << '\n';
-    }
-
-    file << flight << '\n';
+    file << '\n' << flight;
     file.close();
 }
 
@@ -17,6 +12,7 @@ void AddSeveralFlights(int &amount) {
     for (int i = 1; i <= amount; ++i) {
         std::cout << "#" << i << ' ' << kSuggest << '\n';
         AddFlight(CreateFlight());
+        std::cout << '\n';
     }
 }
 

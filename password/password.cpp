@@ -23,7 +23,7 @@ std::string GenerateSalt() {
     salt.reserve(kSaltSize);
 
     for (int i = 0; i < kSaltSize; i++) {
-        salt.push_back(kSymbolsForSalt[rand() % kSymbolsSize]);
+        salt += kSymbolsForSalt[rand() % kSymbolsSize];
     }
 
     return salt;
