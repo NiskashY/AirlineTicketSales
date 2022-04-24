@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <tuple>
 #include "../check_num.h"
 
 struct Airplane {
@@ -15,3 +16,5 @@ struct Airplane {
 };
 
 std::istream& operator>> (std::istream& in, Airplane& airplane);
+
+bool operator==(const Airplane& lhs, const Airplane& rhs);

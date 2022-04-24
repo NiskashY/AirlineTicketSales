@@ -6,6 +6,7 @@
 #pragma once
 #include <string>
 #include <fstream>
+#include <tuple>
 #include "../check_num.h"
 
 struct Date {
@@ -15,3 +16,5 @@ struct Date {
 };
 
 std::istream &operator>>(std::istream &in, Date &date);
+
+bool operator==(const Date& lhs, const Date& rhs);
