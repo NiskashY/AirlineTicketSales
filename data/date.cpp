@@ -16,7 +16,22 @@ std::istream &operator>>(std::istream &in, Date &date) {
     return in;
 }
 
+std::ostream &operator<<(std::ostream &out, const Date &date) {
+    const int kTimeLength = 8;
+    const int kDateLength = 13;
+
+    out << std::setw(kDateLength) << date.departure_date_
+        << std::setw(kTimeLength) << date.departure_time_
+        << std::setw(kTimeLength) << date.arrival_time_;
+    return out;
+}
+
 bool operator==(const Date &lhs, const Date &rhs) {
     return std::tie(lhs.departure_time_, lhs.departure_date_, lhs.arrival_time_)
            == std::tie(rhs.departure_time_, rhs.departure_date_, rhs.arrival_time_);
+}
+
+bool operator<(const Date &lhs, const Date &rhs) {
+    return std::tie(lhs.departure_time_, lhs.departure_date_, lhs.arrival_time_)
+           < std::tie(rhs.departure_time_, rhs.departure_date_, rhs.arrival_time_);
 }

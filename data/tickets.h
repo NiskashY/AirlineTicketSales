@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <tuple>
+#include <iomanip>
 #include "../check_num.h"
 
 struct Tickets {
@@ -20,4 +21,8 @@ struct Tickets {
 
 std::istream &operator>>(std::istream &in, Tickets &tickets);
 
+std::ostream &operator<<(std::ostream &out, const Tickets &tickets);
+
 bool operator==(const Tickets& lhs, const Tickets& rhs);
+
+bool operator<(const Tickets& lhs, const Tickets& rhs);

@@ -12,41 +12,75 @@
 
 class Reader {
 private:
-    const std::string kFileName_ = "flights_database.txt";
+    const std::string kFileName_;
 
 public:
-    Reader() = default;
-
     explicit Reader(const std::string& kFileName) : kFileName_(kFileName) {}
 
-    void AddFlight(const Flight& flight);
+    template <class T>
+    void AddObject(const T& object) {
+        std::ofstream file(kFileName_, std::ios::app);
+        file << '\n' << object;
+        file.close();
+    }
 
-    void AddSeveralFlights(int& amount);
+    template <class T>
+    void AddSeveralObjects(const std::vector<T>& data) {
+        for (const auto& item : data) {
+            AddObject(item);
+        }
+    }
 
-    std::vector<Flight> ReadFromFile() const;
+    template <class T>
+    void ReadFromFile(std::vector<T>& data) const {
+        std::ifstream in (kFileName_, std::ios::in);
+        while(!in.eof()) {
+            T tmp;
+            in >> tmp;
+            data.push_back(tmp);
+        }
+        in.close();
+    }
 
-    void WriteIntoFile(const std::vector<Flight>& all_flights) const;
+    template <class T>
+    void WriteIntoFile(const std::vector<T>& data) const {
+        std::ofstream out(kFileName_, std::ios::out);
+        for (auto& item : data) {
+            out << '\n' << item;
+        }
+        out.close();
+    }
 
-    void DeleteFlight(const int& number);
+    template <class T>
+    void DeleteObject(const std::vector<int>& positions, std::vector<T>& data) {
+        const auto& kSuccessDelete = "The Information successfully deleted!";
+        const auto& kInvalidNumber = "The Information with this number does not exist";
 
-    void ShowFlights(const std::vector<Flight>& vec) const;
+        for (int position : positions) {
+            auto it = data.begin() + position - 1;
+            if (it < data.end() && it >= data.begin()) {
+                data.erase(it);
+                std::cout << "<position #" << position << ">  - " << kSuccessDelete << '\n';
+            } else {
+                std::cout << "<position #" << position << ">  - " << "\x1b[31m" << kInvalidNumber << "\x1b[0m\n";
+            }
+        }
+        WriteIntoFile(data);
+    }
 
-    void Edit();
+    template <class T>
+    bool Edit(const int& position, std::vector<T>& data) {
+        const auto& kNewInfo = "Input new information:";
+        std::cout << "\n" << kNewInfo << "\n";
+        T new_info;
+        std::cin >> new_info;
+        if (position < data.size() && position >= 0) {
+            data[position] = new_info;
+            WriteIntoFile(data);
+            return true;
+        }
+        return false;
+    }
 
-    std::vector<Flight> Search(const Parameter& parameter);
 };
 
-void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights);
-
-void SearchFullFlight(std::istream& in, std::vector<Flight>& matching_flights);
-
-void SearchAirplane(std::istream& in, std::vector<Flight>& matching_flights);
-
-void SearchDate(std::istream& in, std::vector<Flight>& matching_flights);
-
-void SearchTickets(std::istream& in, std::vector<Flight>& matching_flights);
-
-template <class T>
-bool Compare(const T& lhs, const T& rhs) {
-    return lhs == rhs;
-}
