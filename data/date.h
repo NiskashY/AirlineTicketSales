@@ -1,14 +1,12 @@
-/*
- *
- * TODO: сделать проверки на ввод некорректных данных
- *
- */
 #pragma once
+
 #include <string>
 #include <fstream>
 #include <tuple>
 #include <iomanip>
+
 #include "../check_num.h"
+#include "validation_data.h"
 
 struct Date {
     std::string departure_date_;

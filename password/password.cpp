@@ -14,11 +14,11 @@ Password GenerateHashPassword(const std::string& pass) {
 }
 
 std::string GenerateSalt() {
-    const std::string kSymbolsForSalt = "aA0bB1cC2dD3eE4fF5gG6hH7iI8jJ9kKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
+    const auto& kSymbolsForSalt = "aA0bB1cC2dD3eE4fF5gG6hH7iI8jJ9kKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
     const int kSaltSize = 16;
     const int kSymbolsSize = 62;
 
-    srand(time(NULL));
+    srand(time(nullptr));
     std::string salt;
     salt.reserve(kSaltSize);
 

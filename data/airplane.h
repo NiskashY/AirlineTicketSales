@@ -1,15 +1,12 @@
-/*
- *
- * TODO: сделать проверки на ввод некорректных данных
- *
- */
 #pragma once
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <tuple>
 #include <iomanip>
+
 #include "../check_num.h"
+#include "validation_data.h"
 
 struct Airplane {
     std::string type_;

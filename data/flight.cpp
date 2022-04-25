@@ -243,22 +243,17 @@ std::ostream &operator<<(std::ostream &out, const Flight &flight) {
 }
 
 std::istream &operator>>(std::istream &in, Flight &flight) {
-    // TODO: ADD VALIDATION!!!
-
     if (typeid(in) == typeid(std::ifstream)) {
         in >> flight.destination_ >> flight.flight_number_
            >> flight.airplane_ >> flight.date_ >> flight.tickets_;
     } else {
-        const auto& kInputDestination = "Input Flight Destination: ";
-        const auto& kInputNumber = "Input Flight Number: ";
+        flight.destination_ = InputFlightDestination(in);
+        flight.flight_number_ = InputFlightNumber(in);
 
-        std::cout << kInputDestination;
-        in >> flight.destination_;
+        in >> flight.airplane_ >> flight.date_;
+        flight.tickets_.capacity = flight.airplane_.capacity_; // this is for correct amount of seats in tickets.
+        in >> flight.tickets_;
 
-        std::cout << kInputNumber;
-        CheckNum(in, flight.flight_number_);
-
-        in >> flight.airplane_ >> flight.date_ >> flight.tickets_;
     }
     return in;
 }
@@ -272,4 +267,3 @@ bool operator<(const Flight &lhs, const Flight &rhs) {
     return std::tie(lhs.flight_number_, lhs.destination_, lhs.airplane_, lhs.date_, lhs.tickets_)
            < std::tie(rhs.flight_number_, rhs.destination_, rhs.airplane_, rhs.date_, rhs.tickets_);
 }
-

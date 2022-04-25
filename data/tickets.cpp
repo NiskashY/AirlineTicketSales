@@ -5,15 +5,11 @@ std::istream &operator>>(std::istream &in, Tickets &tickets) {
         in >> tickets.available_in_business_ >> tickets.price_of_business_ >> tickets.available_in_economy_ >> tickets.price_of_economy_;
     }
     else {
-        // TODO: VALIDATION
-        std::cout << "Input available seats in business class: ";
-        CheckNum(in, tickets.available_in_business_);
-        std::cout << "Input price of business class: ";
-        CheckNum(in, tickets.price_of_business_);
-        std::cout << "Input available seats in economy class: ";
-        CheckNum(in, tickets.available_in_economy_);
-        std::cout << "Input price of economy class: ";
-        CheckNum(in, tickets.price_of_economy_);
+        tickets.available_in_business_ = InputSeatsAmount(in, "business class", tickets.capacity);
+        tickets.price_of_business_ = InputPrice(in, "business class");
+        int free_seats_left = tickets.capacity - tickets.available_in_business_;
+        tickets.available_in_economy_ = InputSeatsAmount(in, "economy class", free_seats_left);
+        tickets.price_of_economy_ = InputPrice(in, "economy class");
     }
     return in;
 }

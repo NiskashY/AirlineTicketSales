@@ -1,17 +1,13 @@
-/*
- *
- * TODO: сделать проверки на ввод некорректных данных
- *
- */
 #pragma once
 
 #include <iomanip>
 #include <vector>
+
 #include "airplane.h"
 #include "date.h"
 #include "tickets.h"
-#include "reader.h"
-
+#include "../reader/reader.h"
+#include "validation_data.h"
 
 enum class Parameter {
     Flight,
@@ -100,25 +96,3 @@ std::istream& operator>>(std::istream& file, Flight& flight);
 bool operator==(const Flight& lhs, const Flight& rhs);
 
 bool operator<(const Flight& lhs, const Flight& rhs);
-
-void BuyTicket() {
-/*    TODO: VALIDATION
- *          + ADD NOT ONLY WANT TOO BOOK PROPOSE USER
- *              BUSINESS ?
- *              ECONOMY  ?
- *          + ADD AMOUNT OF TICKETS
- */
-
-    const auto& kInput = "Input number of flight you want too book";
-
-    Reader reader("flights_database.txt");
-    std::vector<Flight> flights;
-    reader.ReadFromFile(flights);
-
-    std::cout << kInput << '\n';
-    int number = 0;
-    CheckNum(std::cin, number);
-    Tickets tickets = flights[number].getTickets();
-    if (tickets.available_in_business_ > 0 &&)
-
-}

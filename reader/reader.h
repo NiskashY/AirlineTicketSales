@@ -1,5 +1,4 @@
 #pragma once
-#include "flight.h"
 
 #include <string>
 #include <fstream>
@@ -7,6 +6,8 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+
+#define ERROR_OPEN_FILE "ERROR: failed to open file"
 
 // Файл flights_database.txt находится в папке cmake-build-debug
 
@@ -20,7 +21,11 @@ public:
     template <class T>
     void AddObject(const T& object) {
         std::ofstream file(kFileName_, std::ios::app);
-        file << '\n' << object;
+        if (!file.is_open()) {
+            std::cout << ERROR_OPEN_FILE << '\n';
+        } else {
+            file << '\n' << object;
+        }
         file.close();
     }
 
@@ -34,10 +39,14 @@ public:
     template <class T>
     void ReadFromFile(std::vector<T>& data) const {
         std::ifstream in (kFileName_, std::ios::in);
-        while(!in.eof()) {
-            T tmp;
-            in >> tmp;
-            data.push_back(tmp);
+        if (!in.is_open()) {
+            std::cout << ERROR_OPEN_FILE << '\n';
+        } else {
+            while (!in.eof()) {
+                T tmp;
+                in >> tmp;
+                data.push_back(tmp);
+            }
         }
         in.close();
     }
@@ -45,8 +54,12 @@ public:
     template <class T>
     void WriteIntoFile(const std::vector<T>& data) const {
         std::ofstream out(kFileName_, std::ios::out);
-        for (auto& item : data) {
-            out << '\n' << item;
+        if (!out.is_open()) {
+            std::cout << ERROR_OPEN_FILE << '\n';
+        } else {
+            for (auto &item: data) {
+                out << '\n' << item;
+            }
         }
         out.close();
     }

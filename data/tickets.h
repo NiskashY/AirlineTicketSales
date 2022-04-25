@@ -1,18 +1,17 @@
-/*
- *
- * TODO сделать проверки на ввод некорректных данных
- *
- */
-
 #pragma once
+
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <tuple>
 #include <iomanip>
+
 #include "../check_num.h"
+#include "../reader/reader.h"
+#include "validation_data.h"
 
 struct Tickets {
+    int capacity = 0; // this field for correct amount of available seats (copy of airplane capacity)
     int available_in_business_ = 0;
     int price_of_business_ = 0;
     int available_in_economy_ = 0;
