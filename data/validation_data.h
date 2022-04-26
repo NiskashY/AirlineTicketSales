@@ -4,6 +4,10 @@
 
 #include "../check_num.h"
 
+int InputAmountOfFlights();
+
+int InputNumberOfDeleted();
+
 int InputAmountTickets();
 
 // Number of Flight - number of flight in file 1, 2, ..., n

@@ -1,5 +1,5 @@
 #include "standard_user.h"
 
-void StandardUser::View() {
-
+bool StandardUser::StandardUserAllowed() const {
+    return access_;
 }

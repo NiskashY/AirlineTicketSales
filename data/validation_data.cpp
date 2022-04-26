@@ -1,8 +1,39 @@
-//
-// Created by mint on 25.04.22.
-//
-
 #include "validation_data.h"
+
+int InputAmountOfFlights() {
+    const auto& kInputNumber = "Input amount of flights you want to create: ";
+    const auto& kInvalidAmount = "Amount cant be greater then 100 and less then 0. ReEnter: ";
+    const int& kMinValue = 0;
+    const int& kMaxValue = 100;
+
+    std::cout << kInputNumber;
+    int amount = 0;
+    do {
+        CheckNum(std::cin,amount);
+        if (amount < kMinValue || amount > kMaxValue) {
+            std::cout << kInvalidAmount << '\n';
+        }
+    } while (amount < kMinValue || amount > kMaxValue);
+
+    return amount;
+}
+
+int InputNumberOfDeleted() {
+    const auto& kInputNumber = "Input number of deleting elements: ";
+    const auto &kInvalidAmount = "Amount cant be less then 0. ReEnter: ";
+    const int &kMinValue = 0;
+
+    std::cout << kInputNumber;
+    int amount = 0;
+    do {
+        CheckNum(std::cin, amount);
+        if (amount < kMinValue) {
+            std::cout << kInvalidAmount << '\n';
+        }
+    } while (amount < kMinValue);
+
+    return amount;
+}
 
 int InputAmountTickets() {
     const auto &kInputAmountTickets = "Input amount of tickets you want too book: ";
@@ -42,7 +73,7 @@ int InputNumberOfFlight(const size_t &total_flights) {
 int InputFlightNumber(std::istream &in) {
     int number = 0;
     const auto &kInputNumber = "Input Flight Number: ";
-    const auto &kIncorrectNumber = "FLight number should be [1; 1000]. ReEnter: ";
+    const auto &kIncorrectNumber = "FLight number should be [1; 10'000]. ReEnter: ";
     const int &kMaxNumber = 10'000;
     const int &kMinNumber = 1;
     std::cout << kInputNumber;
@@ -195,6 +226,7 @@ bool ParseDate(const std::string &date) {
 
 std::string InputDate(std::istream &in) {
     const auto& kInputDate = "Input flight departure date | XX-MM-YYYY |: ";
+    std::cout << kInputDate;
 
     std::string date_tmp;
     bool isDateFormatOK = false;
@@ -251,6 +283,7 @@ bool ParseTime(const std::string &date) {
 
 std::string InputTime(std::istream &in, const std::string& type_of_date) {
     const auto& kInputDate = "Input flight " + type_of_date + " | HH-MM (24 clock)|: ";
+    std::cout << kInputDate;
 
     std::string time_tmp;
     bool isTimeFormatOK = false;

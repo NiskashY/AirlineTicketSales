@@ -8,6 +8,3 @@ bool BookEconomy(Tickets& available, const int& amount);
 bool BookBusiness(Tickets& available, const int& amount);
 
 bool BookTicket(Tickets& available_tickets, bool& isBooked);
-
-void BuyTicket();
-

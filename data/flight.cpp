@@ -1,17 +1,17 @@
 #include "flight.h"
 
-Flight CreateFlight() {
-    Flight flight;
-    std::cin >> flight;
-    return flight;
+std::vector<Flight> CreateFlights() {
+    int n = InputAmountOfFlights();
+    std::vector<Flight> flights(n);
+    for (auto& item : flights) {
+        std::cin >> item;
+    }
+    return flights;
 }
 
 void ShowFlights(const std::vector<Flight> &vec) {
-    const auto& kVecEmpty = "Nothing to show :(";
     int position = 0;
-    if (vec.empty()) {
-        std::cout << "\t" << kVecEmpty << "\n";
-    }
+
     for (auto &flight: vec) {
         ++position;
         std::cout << '#' << position << ' ' << std::left << flight << '\n';
@@ -19,54 +19,19 @@ void ShowFlights(const std::vector<Flight> &vec) {
 }
 
 void ShowFlights() {
-    const auto& kVecEmpty = "Nothing to show :(";
     int position = 0;
 
     std::vector<Flight> vec;
     Reader reader("flights_database.txt");
     reader.ReadFromFile(vec);
 
-    if (vec.empty()) {
-        std::cout << "\t" << kVecEmpty << "\n";
-    }
     for (auto &flight: vec) {
         ++position;
-        std::cout << '#' << position << ' ' << std::left << flight << '\n';
+        std::cout << '#' << std::setw(3) << std::left << position << ' ' << flight << '\n';
     }
 }
 
 /*   -------------SEARCH SECTION------------- */
-
-std::vector<Flight> Search(const Parameter& parameter) {
-    std::ifstream in("flights_database.txt", std::ios::in);
-    std::vector<Flight> matching_flights;
-
-    // Parameter - what information we want to find
-    switch (parameter) {
-        case Parameter::Flight : {
-            SearchPartFlight(in, matching_flights);
-            break;
-        }
-        case Parameter::Airplane : {
-            SearchAirplane(in, matching_flights);
-            break;
-        }
-        case Parameter::Date: {
-            SearchDate(in, matching_flights);
-            break;
-        }
-        case Parameter::Tickets: {
-            SearchTickets(in, matching_flights);
-            break;
-        }
-        default : {
-            SearchFullFlight(in, matching_flights);
-        }
-    }
-
-    in.close();
-    return matching_flights;
-}
 
 void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights) {
     const auto& kInputDestination = "Input Flight Destination: ";
@@ -147,41 +112,6 @@ void SearchTickets(std::istream& in, std::vector<Flight>& matching_flights) {
             matching_flights.push_back(tmp);
         }
     }
-}
-
-/* ---------------- SORT SECTION ----------------*/
-
-void Sort(const Parameter& parameter) {
-    Reader reader("flights_database.txt");
-    std::vector<Flight> data;
-    reader.ReadFromFile(data);
-
-    // Parameter - what information we want to find
-    switch (parameter) {
-        case Parameter::Flight : default: {
-            std::sort(data.begin(), data.end());
-            break;
-        }
-        case Parameter::Airplane : {
-            std::sort(data.begin(), data.end(), [](const Flight& lhs, const Flight& rhs) {
-                return lhs.getAirplane() < rhs.getAirplane();
-            });
-            break;
-        }
-        case Parameter::Date: {
-            std::sort(data.begin(), data.end(), [](const Flight& lhs, const Flight& rhs) {
-                return lhs.getDate() < rhs.getDate();
-            });
-            break;
-        }
-        case Parameter::Tickets: {
-            std::sort(data.begin(), data.end(), [](const Flight& lhs, const Flight& rhs) {
-                return lhs.getTickets() < rhs.getTickets();
-            });
-            break;
-        }
-    }
-    reader.WriteIntoFile(data);
 }
 
 /* ---------------- GETTERS and SETTERS ---------------- */

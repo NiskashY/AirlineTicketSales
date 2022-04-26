@@ -64,13 +64,11 @@ public:
 
 };
 
-Flight CreateFlight();
+std::vector<Flight> CreateFlights();
 
 void ShowFlights();
 
 void ShowFlights(const std::vector<Flight>& vec);
-
-std::vector<Flight> Search(const Parameter& parameter);
 
 void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights);
 
@@ -86,8 +84,6 @@ template <class T>
 bool Compare(const T& lhs, const T& rhs) {
     return lhs == rhs;
 }
-
-void Sort(const Parameter& parameter);
 
 std::ostream& operator<<(std::ostream& file, const Flight& flight);
 
