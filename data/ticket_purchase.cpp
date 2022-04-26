@@ -10,43 +10,6 @@ bool isUserWantAnotherClass() {
     return answer == "1";
 }
 
-void BuyTicket() {
-    Reader reader("flights_database.txt");
-    std::vector<Flight> flights;
-    reader.ReadFromFile(flights);
-
-    const auto &kSuccessBooked = "The Ticket was successfully booked!";
-    const auto &kNotEnoughSeats = "There are not enough seats on this flight!\n"
-                                  "1 - Choose another flight\nelse - exit\t Your choice";
-
-    while(true) {
-        int number = InputNumberOfFlight(flights.size());
-        Tickets available_tickets = flights[number - 1].getTickets();
-
-        bool isBooked = false;
-
-        // if I need to exit;
-        if (BookTicket(available_tickets, isBooked)) {
-            return;
-        }
-
-        if (isBooked) {
-            std::cout << kSuccessBooked << '\n';
-            flights[number - 1].setTickets(available_tickets);
-            reader.WriteIntoFile(flights);
-            break;
-        } else {
-            std::cout << kNotEnoughSeats;
-            std::string request;
-            std::cin >> request;
-            if (request != "1") {
-                return;
-            }
-        }
-
-    }
-}
-
 bool BookTicket(Tickets &available_tickets, bool &isBooked) {
     const auto &kProposeClass = "Input type of ticket:\n1 - Economy\n2 - Business\nelse - exit\tYour choice: ";
     std::cout << kProposeClass;

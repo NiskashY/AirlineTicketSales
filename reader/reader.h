@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #define ERROR_OPEN_FILE "ERROR: failed to open file"
+#define FILE_IS_EMPTY "FILE: file is empty"
 
 // Файл flights_database.txt находится в папке cmake-build-debug
 
@@ -15,19 +16,25 @@ class Reader {
 private:
     const std::string kFileName_;
 
-public:
-    explicit Reader(const std::string& kFileName) : kFileName_(kFileName) {}
-
     template <class T>
     void AddObject(const T& object) {
         std::ofstream file(kFileName_, std::ios::app);
         if (!file.is_open()) {
             std::cout << ERROR_OPEN_FILE << '\n';
         } else {
-            file << '\n' << object;
+            if (isFileNotEmpty()) {
+                file << '\n';
+            }
+            file << object;
         }
         file.close();
     }
+
+public:
+
+    bool isFileNotEmpty() const;
+
+    explicit Reader(const std::string& kFileName) : kFileName_(kFileName) {}
 
     template <class T>
     void AddSeveralObjects(const std::vector<T>& data) {
@@ -42,23 +49,32 @@ public:
         if (!in.is_open()) {
             std::cout << ERROR_OPEN_FILE << '\n';
         } else {
-            while (!in.eof()) {
-                T tmp;
-                in >> tmp;
-                data.push_back(tmp);
+            if (isFileNotEmpty()) {
+                while (!in.eof()) {
+                    T tmp;
+                    in >> tmp;
+                    data.push_back(tmp);
+                }
+            } else {
+                std::cout << FILE_IS_EMPTY << '\n';
             }
         }
         in.close();
     }
 
     template <class T>
-    void WriteIntoFile(const std::vector<T>& data) const {
+    void WriteIntoFile(const std::vector<T>& data) const { // delete old information
         std::ofstream out(kFileName_, std::ios::out);
         if (!out.is_open()) {
             std::cout << ERROR_OPEN_FILE << '\n';
         } else {
+            bool isFirst = true;
             for (auto &item: data) {
-                out << '\n' << item;
+                if (!isFirst) {
+                    out << '\n';
+                }
+                isFirst = false;
+                out << item;
             }
         }
         out.close();
@@ -67,22 +83,51 @@ public:
     template <class T>
     void DeleteObject(const std::vector<int>& positions, std::vector<T>& data) {
         const auto& kSuccessDelete = "The Information successfully deleted!";
-        const auto& kInvalidNumber = "The Information with this number does not exist";
+        const auto& kInvalidNumber = "The Information with this number does not exist or already deleted";
+        const auto& kWarning = "\x1b[31mWARNING: are you sure you want to delete ";
+        const auto& kWarningMenu = "'YES' - i want delete\n'Root-YES' - I want to delete, but no longer ask for confirmation\n"
+                               "'quit' - leave\n else - skip\x1b[0m\nYour Choice:\t";
 
-        for (int position : positions) {
-            auto it = data.begin() + position - 1;
+        // TODO: add const string to strings below
+        bool isErased = false;
+        bool isNeedToWarning = true;
+
+        for (int i = 0; i < positions.size(); ++i) {
+            auto it = data.begin() + positions[i] - 1 - i;
+            const auto& kStrPosition = "<position #" + std::to_string(positions[i]) + ">  - ";
             if (it < data.end() && it >= data.begin()) {
-                data.erase(it);
-                std::cout << "<position #" << position << ">  - " << kSuccessDelete << '\n';
+                std::string request;
+                if (isNeedToWarning) { // WARNING CHECK
+                    std::cout << kWarning << kStrPosition << "?\n" << kWarningMenu ;
+                    std::cin >> request;
+                }
+
+                if (request == "YES" || !isNeedToWarning || request == "Root-YES") {
+                    data.erase(it);
+                    std::cout << kStrPosition << kSuccessDelete << '\n';
+                    isErased = true;
+
+                    if (request == "Root-YES") {
+                        isNeedToWarning = false;
+                    }
+                } else if (request == "quit") {
+                    return;
+                }
             } else {
-                std::cout << "<position #" << position << ">  - " << "\x1b[31m" << kInvalidNumber << "\x1b[0m\n";
+                std::cout << kStrPosition << "\x1b[31m" << kInvalidNumber << "\x1b[0m\n";
             }
         }
-        WriteIntoFile(data);
+
+        if (isErased) { // if at least once we erase something from data
+            WriteIntoFile(data);
+        }
     }
 
     template <class T>
     bool Edit(const int& position, std::vector<T>& data) {
+        const auto& kSuccessDelete = "The Information successfully edited!";
+        const auto& kInvalidNumber = "The Information with this number does not exist";
+
         const auto& kNewInfo = "Input new information:";
         std::cout << "\n" << kNewInfo << "\n";
         T new_info;
@@ -93,7 +138,21 @@ public:
             return true;
         }
         return false;
+
+//        bool isErased = false;
+//        for (int position : positions) {
+//            auto it = data.begin() + position - 1;
+//            if (it < data.end() && it >= data.begin()) {
+//                data.erase(it);
+//                std::cout << "<position #" << position << ">  - " << kSuccessDelete << '\n';
+//                isErased = true;
+//            } else {
+//                std::cout << "<position #" << position << ">  - " << "\x1b[31m" << kInvalidNumber << "\x1b[0m\n";
+//            }
+//        }
+//        if (isErased) { // if at least once we erase something from data
+//            WriteIntoFile(data);
+//        }
     }
 
 };
-
