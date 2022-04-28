@@ -2,9 +2,9 @@
 #include "data/flight.h"
 #include "data/ticket_purchase.h"
 #include "reader/reader.h"
-//#include <ncurses.h>
-#include "user/standard_user.h"
-#include "user/admin.h"
+#include "user_accounts/user.h"
+#include "user_accounts/admin_functional.h"
+
 void getch() { // this is for linux-clion to prevent immediately closing after work is done.
     std::cin.get();
     std::string a;
@@ -12,28 +12,54 @@ void getch() { // this is for linux-clion to prevent immediately closing after w
 }
 
 int main() {
-    Admin admin;
-    StandardUser user;
 
-//    user.View();
-//    user.BuyTickets();
-//    ShowFlights(user.Search(Parameter::Flight));
-
-    std::cout << "\n\n----------------------\n\n";
-    admin.ViewFlights();
-//    admin.BuyTickets();
-//    admin.AddFlights();
-//    ShowFlights(admin.SearchFlights(Parameter::Date));
+    AddUser(User("BARK", GenerateHashPassword("genius"), 0));
+//    SignUp();
+//    User user;
+//    auto isSign = SignIn(user);
 //
-//    user.SortFlights(Parameter::Airplane);
-    admin.DeleteFlights();
+//    if (isSign) {
+//        std::cout << "Login: " << user.getLogin() << '\n';
+//        std::cout << "Pass : " << user.getPassword() << '\n';
+//    }
 
-    ShowFlights();
+    std::vector<User> users;
+    Reader reader(ALL_USER_ACCOUNTS);
+    reader.ReadFromFile(users);
+    DeleteAccount(users,"ASDLKJAS");
     getch();
     return 0;
+
+
 }
 
 /*
+
+
+ TODO : SORT
+    std::vector<User> users;
+    Reader reader(ALL_USER_ACCOUNTS);
+    reader.ReadFromFile(users);
+    while(true) {
+        system("clear");
+        int type = 0, x;
+        std::cout << "Input sort: 1 - Log, 2 - Access";
+        std::cin >> type;
+        std::cout << "1 - Asce, 2 - descending";
+        std::cin >> x;
+
+        auto tmp = type + x - (x == 1);
+        std::cout << "tmp = " << tmp << '\n';
+
+        SortAccounts(users, type + x - (x == 1)); // (if x == 1 - I don't need to do something);
+        std::cout << "\n---------------\n";
+        ViewUsers();
+        std::cout << "\n---------------\n";
+        ViewUsers(users);
+        getch();
+    }
+
+
     reader.DeleteObject({1, 2}, flights);
 
     std::cout << "INPUT time: ";

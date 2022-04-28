@@ -4,6 +4,8 @@
 
 #include "../check_num.h"
 
+int InputEditedPosition();
+
 int InputAmountOfFlights();
 
 int InputNumberOfDeleted();

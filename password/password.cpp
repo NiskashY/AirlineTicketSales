@@ -28,3 +28,58 @@ std::string GenerateSalt() {
 
     return salt;
 }
+
+bool isBanned(const char& symbol) {
+    const std::string kBannedSymbols = "/\\?*-+'\"!;()%#$@^";
+    return kBannedSymbols.find(symbol) == std::string::npos;
+}
+
+bool CheckPassword(const std::string &password) {
+    return std::all_of(password.begin(), password.end(), isBanned);
+}
+
+std::string InputPassword(std::istream& in) {
+    // TODO: сделать ***** - это уже реализовать на WINDOWS
+    const auto& kInputPassword = "Input password: ";
+    const auto& kErrorMessage = "The password cannot contain /\\?*-+'\"!;()%#$@^. ReEnter:";
+    std::string password;
+    bool isPasswordCorrect = false;
+
+    std::cout << kInputPassword;
+    do {
+        getline(in, password);
+        isPasswordCorrect = CheckPassword(password);
+        if (!isPasswordCorrect) {
+            std::cout << kErrorMessage;
+        }
+    } while (!isPasswordCorrect);
+
+    return password;
+}
+
+Password SignUpInputPassword(std::istream &in) {
+    auto password = InputPassword(in);
+    return GenerateHashPassword(password);
+}
+
+std::ostream &operator<<(std::ostream &out, const Password &password) {
+    out << password.salted_hash_password << ' ';
+
+    if (typeid(out) == typeid(std::ofstream)) {
+        out << password.salt;
+    }
+
+    return out;
+}
+
+std::istream &operator>>(std::istream &in, Password &password) {
+    in >> password.salted_hash_password;
+    in >> password.salt;
+    return in;
+}
+
+bool operator==(const Password &lhs, const Password &rhs) {
+    return std::tie(lhs.salted_hash_password, lhs.salt)
+           == std::tie(rhs.salted_hash_password, rhs.salt);
+}
+

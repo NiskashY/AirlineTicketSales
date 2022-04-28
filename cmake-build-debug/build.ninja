@@ -79,24 +79,6 @@ build CMakeFiles/AirlineTicketSales.dir/data/flight.cpp.o: CXX_COMPILER__Airline
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
   OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/data
 
-build CMakeFiles/AirlineTicketSales.dir/user/standard_user.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/user/standard_user.cpp || cmake_object_order_depends_target_AirlineTicketSales
-  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/user/standard_user.cpp.o.d
-  FLAGS = -g
-  OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
-  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user
-
-build CMakeFiles/AirlineTicketSales.dir/user/admin.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/user/admin.cpp || cmake_object_order_depends_target_AirlineTicketSales
-  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/user/admin.cpp.o.d
-  FLAGS = -g
-  OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
-  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user
-
-build CMakeFiles/AirlineTicketSales.dir/user/user.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/user/user.cpp || cmake_object_order_depends_target_AirlineTicketSales
-  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/user/user.cpp.o.d
-  FLAGS = -g
-  OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
-  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user
-
 build CMakeFiles/AirlineTicketSales.dir/password/password.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/password/password.cpp || cmake_object_order_depends_target_AirlineTicketSales
   DEP_FILE = CMakeFiles/AirlineTicketSales.dir/password/password.cpp.o.d
   FLAGS = -g
@@ -127,11 +109,17 @@ build CMakeFiles/AirlineTicketSales.dir/reader/reader.cpp.o: CXX_COMPILER__Airli
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
   OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/reader
 
-build CMakeFiles/AirlineTicketSales.dir/user/validation_user.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/user/validation_user.cpp || cmake_object_order_depends_target_AirlineTicketSales
-  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/user/validation_user.cpp.o.d
+build CMakeFiles/AirlineTicketSales.dir/user_accounts/user.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/user_accounts/user.cpp || cmake_object_order_depends_target_AirlineTicketSales
+  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/user_accounts/user.cpp.o.d
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
-  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user
+  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user_accounts
+
+build CMakeFiles/AirlineTicketSales.dir/user_accounts/admin_functional.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/user_accounts/admin_functional.cpp || cmake_object_order_depends_target_AirlineTicketSales
+  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/user_accounts/admin_functional.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
+  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user_accounts
 
 
 # =============================================================================
@@ -141,7 +129,7 @@ build CMakeFiles/AirlineTicketSales.dir/user/validation_user.cpp.o: CXX_COMPILER
 #############################################
 # Link the executable AirlineTicketSales
 
-build AirlineTicketSales: CXX_EXECUTABLE_LINKER__AirlineTicketSales_Debug CMakeFiles/AirlineTicketSales.dir/main.cpp.o CMakeFiles/AirlineTicketSales.dir/data/tickets.cpp.o CMakeFiles/AirlineTicketSales.dir/data/airplane.cpp.o CMakeFiles/AirlineTicketSales.dir/data/date.cpp.o CMakeFiles/AirlineTicketSales.dir/data/flight.cpp.o CMakeFiles/AirlineTicketSales.dir/user/standard_user.cpp.o CMakeFiles/AirlineTicketSales.dir/user/admin.cpp.o CMakeFiles/AirlineTicketSales.dir/user/user.cpp.o CMakeFiles/AirlineTicketSales.dir/password/password.cpp.o CMakeFiles/AirlineTicketSales.dir/password/sha256.cpp.o CMakeFiles/AirlineTicketSales.dir/data/ticket_purchase.cpp.o CMakeFiles/AirlineTicketSales.dir/data/validation_data.cpp.o CMakeFiles/AirlineTicketSales.dir/reader/reader.cpp.o CMakeFiles/AirlineTicketSales.dir/user/validation_user.cpp.o
+build AirlineTicketSales: CXX_EXECUTABLE_LINKER__AirlineTicketSales_Debug CMakeFiles/AirlineTicketSales.dir/main.cpp.o CMakeFiles/AirlineTicketSales.dir/data/tickets.cpp.o CMakeFiles/AirlineTicketSales.dir/data/airplane.cpp.o CMakeFiles/AirlineTicketSales.dir/data/date.cpp.o CMakeFiles/AirlineTicketSales.dir/data/flight.cpp.o CMakeFiles/AirlineTicketSales.dir/password/password.cpp.o CMakeFiles/AirlineTicketSales.dir/password/sha256.cpp.o CMakeFiles/AirlineTicketSales.dir/data/ticket_purchase.cpp.o CMakeFiles/AirlineTicketSales.dir/data/validation_data.cpp.o CMakeFiles/AirlineTicketSales.dir/reader/reader.cpp.o CMakeFiles/AirlineTicketSales.dir/user_accounts/user.cpp.o CMakeFiles/AirlineTicketSales.dir/user_accounts/admin_functional.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
   POST_BUILD = :

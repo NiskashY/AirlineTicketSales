@@ -8,7 +8,7 @@
 #include <algorithm>
 
 #define ERROR_OPEN_FILE "ERROR: failed to open file"
-#define FILE_IS_EMPTY "FILE: file is empty"
+#define FILE_IS_EMPTY "FILE: empty file"
 
 // Файл flights_database.txt находится в папке cmake-build-debug
 
@@ -16,11 +16,17 @@ class Reader {
 private:
     const std::string kFileName_;
 
+public:
+
+    explicit Reader(const std::string& kFileName) : kFileName_(kFileName) {}
+
+    bool isFileNotEmpty() const;
+
     template <class T>
     void AddObject(const T& object) {
         std::ofstream file(kFileName_, std::ios::app);
         if (!file.is_open()) {
-            std::cout << ERROR_OPEN_FILE << '\n';
+            std::cout << ERROR_OPEN_FILE  << '\n';
         } else {
             if (isFileNotEmpty()) {
                 file << '\n';
@@ -30,12 +36,6 @@ private:
         file.close();
     }
 
-public:
-
-    bool isFileNotEmpty() const;
-
-    explicit Reader(const std::string& kFileName) : kFileName_(kFileName) {}
-
     template <class T>
     void AddSeveralObjects(const std::vector<T>& data) {
         for (const auto& item : data) {
@@ -44,9 +44,9 @@ public:
     }
 
     template <class T>
-    void ReadFromFile(std::vector<T>& data) const {
+    void ReadFromFile(std::vector<T>& data, bool isNeedToShowMessage = true) const {
         std::ifstream in (kFileName_, std::ios::in);
-        if (!in.is_open()) {
+        if (!in.is_open() && isNeedToShowMessage) {
             std::cout << ERROR_OPEN_FILE << '\n';
         } else {
             if (isFileNotEmpty()) {
@@ -55,7 +55,7 @@ public:
                     in >> tmp;
                     data.push_back(tmp);
                 }
-            } else {
+            } else if (isNeedToShowMessage) {
                 std::cout << FILE_IS_EMPTY << '\n';
             }
         }
@@ -93,7 +93,7 @@ public:
         bool isNeedToWarning = true;
 
         for (int i = 0; i < positions.size(); ++i) {
-            auto it = data.begin() + positions[i] - 1 - i;
+            auto it = data.begin() + positions[i] - i;
             const auto& kStrPosition = "<position #" + std::to_string(positions[i]) + ">  - ";
             if (it < data.end() && it >= data.begin()) {
                 std::string request;
@@ -124,8 +124,8 @@ public:
     }
 
     template <class T>
-    bool Edit(const int& position, std::vector<T>& data) {
-        const auto& kSuccessDelete = "The Information successfully edited!";
+    void Edit(const int& position, std::vector<T>& data) {
+        const auto& kSuccessEdit = "The Information successfully edited!";
         const auto& kInvalidNumber = "The Information with this number does not exist";
 
         const auto& kNewInfo = "Input new information:";
@@ -135,24 +135,11 @@ public:
         if (position < data.size() && position >= 0) {
             data[position] = new_info;
             WriteIntoFile(data);
-            return true;
+            std::cout << kSuccessEdit << '\n';
+        } else {
+            std::cout << kInvalidNumber << '\n';
         }
-        return false;
 
-//        bool isErased = false;
-//        for (int position : positions) {
-//            auto it = data.begin() + position - 1;
-//            if (it < data.end() && it >= data.begin()) {
-//                data.erase(it);
-//                std::cout << "<position #" << position << ">  - " << kSuccessDelete << '\n';
-//                isErased = true;
-//            } else {
-//                std::cout << "<position #" << position << ">  - " << "\x1b[31m" << kInvalidNumber << "\x1b[0m\n";
-//            }
-//        }
-//        if (isErased) { // if at least once we erase something from data
-//            WriteIntoFile(data);
-//        }
     }
 
 };

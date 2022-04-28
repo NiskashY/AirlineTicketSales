@@ -107,3 +107,101 @@ void User::SortFlights(const Parameter &parameter) {
     }
     reader.WriteIntoFile(data);
 }
+
+/* ------- SIGN IN / SIGN UP -------- */
+bool isLoginExist(const std::string &login) {
+    Reader reader(ALL_USER_ACCOUNTS);
+    std::vector<User> all_users;
+    reader.ReadFromFile(all_users);
+    if (std::find_if(all_users.begin(), all_users.end(), [login](const User& user) {
+        return user.getLogin() == login;
+    }) != all_users.end()) {
+        return true;
+    }
+    return false;
+}
+
+std::string InputLogin(std::istream &in) {
+    const auto &kInputLogin = "Input login: ";
+    std::string login;
+    std::cout << kInputLogin;
+    getline(in, login);
+    return login;
+}
+
+bool SignIn(User &user) {
+    const auto &kAccountNotFound = "Account not found!";
+    const auto& kAccessDenied = "Access denied!";
+    std::string login = InputLogin(std::cin);
+
+    Reader reader(ALL_USER_ACCOUNTS);
+    std::vector<User> accounts;
+    reader.ReadFromFile(accounts, false);
+
+    auto it = std::find_if(accounts.begin(), accounts.end(), [login](User &user_tmp) {
+        return user_tmp.getLogin() == login;
+    });
+
+    bool isSignIn = false;
+    if (it == accounts.end()) {
+        std::cout << kAccountNotFound << '\n';
+    } else {
+        std::string salt = (*it).getPassword().salt;
+        // TODO: *****************
+        std::string password = InputPassword(std::cin);
+
+        if (GetHash(password, salt) == (*it).getPassword().salted_hash_password) {
+            user = (*it);
+            if (user.getAccess() == 0) {
+                std::cout << kAccessDenied << '\n';
+            } else {
+                isSignIn = true;
+            }
+        }
+    }
+
+    return isSignIn;
+}
+
+void SignUp() {
+    const auto& kLoginExist = "Login already exist!. ReEnter: ";
+    const auto& kSuccess = "Account successfully added!";
+    bool isExist = true;
+    std::string login;
+    do {
+        login = InputLogin(std::cin);
+        isExist = isLoginExist(login);
+        if (isExist) {
+            std::cout << kLoginExist;
+        }
+    } while (isExist);
+
+    std::string password = InputPassword(std::cin);
+    const int& access = 0;
+    Reader reader(ALL_USER_ACCOUNTS);
+    reader.AddObject(User(login, GenerateHashPassword(password), access));
+    std::cout << kSuccess << '\n';
+}
+
+/* ---------------------- */
+const std::string &User::getLogin() const { return login_; }
+
+const Password &User::getPassword() const { return password_; }
+
+int User::getAccess() const { return access_; }
+
+void User::setLogin(const std::string &login) { login_ = login; }
+
+void User::setPassword(const Password &password) { password_ = password; }
+
+void User::setAccess(int access) { access_ = access; }
+
+std::istream &operator>>(std::istream &in, User &user) {
+    in >> user.login_ >> user.password_ >> user.access_;
+    return in;
+}
+
+std::ostream &operator<<(std::ostream &out, const User &user) {
+    out << user.login_ << ' ' << user.password_ << ' ' << user.access_;
+    return out;
+}
