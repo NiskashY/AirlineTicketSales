@@ -7,6 +7,8 @@
 #include <vector>
 #include <algorithm>
 
+#include "../check_num.h"
+
 #define ERROR_OPEN_FILE "ERROR: failed to open file"
 #define FILE_IS_EMPTY "FILE: empty file"
 
@@ -92,9 +94,11 @@ public:
         bool isErased = false;
         bool isNeedToWarning = true;
 
-        for (int i = 0; i < positions.size(); ++i) {
-            auto it = data.begin() + positions[i] - i;
-            const auto& kStrPosition = "<position #" + std::to_string(positions[i]) + ">  - ";
+        int successfully_deleted = 0;
+
+        for (int position : positions) {
+            auto it = data.begin() + position - 1 - successfully_deleted;
+            const auto& kStrPosition = "<position #" + std::to_string(position) + ">  - ";
             if (it < data.end() && it >= data.begin()) {
                 std::string request;
                 if (isNeedToWarning) { // WARNING CHECK
@@ -110,6 +114,8 @@ public:
                     if (request == "Root-YES") {
                         isNeedToWarning = false;
                     }
+
+                    ++successfully_deleted;
                 } else if (request == "quit") {
                     return;
                 }

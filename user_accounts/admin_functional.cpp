@@ -1,35 +1,17 @@
 #include "admin_functional.h"
 
-void AddUser(const User &user) {
+#pragma region accounts
+
+void AddUser(std::vector<User>& accounts, const User &user) {
     Reader reader(ALL_USER_ACCOUNTS);
     reader.AddObject(user);
-}
-
-void IncreaseAccessLevel(User &user) {
-    auto tmp = user.getAccess();
-    user.setAccess(++tmp);
-}
-
-void ShowHeader() {
-    const auto &kHeaderLogins = "Logins";
-    const auto &kHeaderPasswords = "Hash Passwords";
-    const auto &kHeaderAccess = "Access";
-    const int &kLoginsPos = 14;
-    const int &kHashPasswordsPos =
-            20 - kLoginsPos + 64 / 2 + 7 + 3; // 64 - length of hashPass, 20 length of Login, 7 - kHeader / 2, 3 - ' | '
-    const int &kAccessPos = 64 + 3 - kHashPasswordsPos + kLoginsPos + 11;
-
-
-    std::cout << std::fixed
-              << std::setw(kLoginsPos) << kHeaderLogins
-              << std::setw(kHashPasswordsPos) << kHeaderPasswords
-              << std::setw(kAccessPos) << kHeaderAccess << '\n';
+    accounts.push_back(user);
 }
 
 void ShowUser(const User &user) {
     const int &kLoginWidth = 20;
     const auto& kAdmin = "Admin";
-    const auto& kApprovedUser = "confirmed User";
+    const auto& kApprovedUser = "User";
     const auto& kNotApproved = "awaits confirmation";
     int access_tmp = user.getAccess();
 
@@ -47,22 +29,8 @@ void ShowUser(const User &user) {
     std::cout << '\n';
 }
 
-void ViewUsers() {
-    Reader reader(ALL_USER_ACCOUNTS);
-    std::vector<User> accounts;
-    reader.ReadFromFile(accounts);
-
-    ShowHeader();
-    int position = 0;
-    for (auto& item : accounts) {
-        position++;
-        std::cout << '#' << position << ' ';
-        ShowUser(item);
-    }
-}
-
 void ViewUsers(const std::vector<User>& accounts) {
-    ShowHeader();
+    ShowAccountViewHeader();
     int position = 0;
     for (auto& item : accounts) {
         position++;
@@ -90,7 +58,7 @@ bool descendingAccess(const User& lhs, const User& rhs) {
 void SortAccounts(std::vector<User>& users, const int& parameter) {
     bool (*predicate)(const User&, const User&); // pointer to the function from above
     switch(parameter) {
-        case 1 : default: {
+        case 1: {
             predicate = ascendingLogin;
             break;
         }
@@ -105,6 +73,9 @@ void SortAccounts(std::vector<User>& users, const int& parameter) {
         case 4: {
             predicate = descendingAccess;
             break;
+        }
+        default: {
+            return;
         }
     }
     std::sort(users.begin(), users.end(), predicate);
@@ -129,29 +100,74 @@ void DeleteAccount(std::vector<User>& users, const std::string& login) {
     reader.DeleteObject({position}, users);
 }
 
-/* ---------- FLIGHTS ---------- */
-
-void DeleteFlights() {
-    Reader reader(FLIGHTS_DATABASE);
-    std::vector<Flight> flights;
-    DeleteInfo(reader, flights);
+void EditAccount(const int& position, std::vector<User>& users) {
+    Reader reader(ALL_USER_ACCOUNTS);
+    reader.Edit(position - 1, users);
 }
 
-void EditFlights() {
+
+void ConfirmAccount(const int& position, std::vector<User>& users) {
+//    const auto& kInputPos = "Input account position you want "
+    Reader reader(ALL_USER_ACCOUNTS);
+    int access_before = users[position].getAccess() ;
+    users[position].setAccess(++access_before);
+    reader.WriteIntoFile(users);
+}
+
+void BlockAccount(const int& position, std::vector<User>& users) {
+//    const auto& kInputPos = "Input account position you want "
+    Reader reader(ALL_USER_ACCOUNTS);
+    int block_access = 0;
+    users[position].setAccess(block_access);
+    reader.WriteIntoFile(users);
+}
+
+void IncreaseAccessLevel(User &user) {
+    auto tmp = user.getAccess();
+    user.setAccess(++tmp);
+}
+
+#pragma endregion
+
+#pragma region flights
+
+void DeleteFlights(std::vector<Flight>& flights) {
+    const auto& kSuccess = "Done!";
+    const auto& kInputPositions = "Input positions you want to delete:\n";
+    const auto& kPos = "position #";
     Reader reader(FLIGHTS_DATABASE);
-    std::vector<Flight> flights;
-    reader.ReadFromFile(flights);
+
+    int number = InputNumberOfDeleted();
+    std::vector<int> positions(number);
+
+    std::cout << kInputPositions;
+    for (auto& item : positions) {
+        std::cout << kPos;
+        int pos = 0;
+        CheckNum(std::cin, pos);
+        item = pos;
+    }
+
+    std::sort(positions.begin(),positions.end());
+    reader.DeleteObject(positions, flights);
+
+    std::cout << '\t' << kSuccess << '\n';
+}
+
+void EditFlights(std::vector<Flight>& flights) {
+    Reader reader(FLIGHTS_DATABASE);
     int position = InputEditedPosition();
     reader.Edit(position, flights);
 }
 
-void AddFlights() {
+void AddFlights(std::vector<Flight>& all_flights) {
     const auto& kSuccess = "Successfully added!";
     Reader reader(FLIGHTS_DATABASE);
 
-    auto flights = CreateFlights();
-    reader.AddSeveralObjects(flights);
-
+    auto flights_tmp = CreateFlights();
+    reader.AddSeveralObjects(flights_tmp);
+    all_flights.insert(all_flights.end(), flights_tmp.begin(), flights_tmp.end());
     std::cout << kSuccess << '\n';
 }
 
+#pragma endregion

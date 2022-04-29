@@ -22,13 +22,13 @@ public:
                                                                                   access_(access) {}
 
     // Basic user functions
-    void ViewFlights() const;
+    void ViewFlights(std::vector<Flight>&) const;
 
-    void BuyTickets();
+    void BuyTickets(std::vector<Flight>&);
 
-    std::vector<Flight> SearchFlights(const Parameter &parameter);
+    std::vector<Flight> SearchFlights();
 
-    void SortFlights(const Parameter &parameter);
+    std::vector<Flight> SortFlights(std::vector<Flight>&);
 
     // ---Getters ad setters---
     int getAccess() const;
@@ -50,13 +50,15 @@ public:
 
 };
 
-bool isLoginExist(const std::string &login);
+bool isLoginExist(std::vector<User>&, const std::string &);
 
 std::string InputLogin(std::istream &in);
 
-bool SignIn(User& user);
+User CreateNewUser(std::vector<User>&);
 
-void SignUp();
+bool SignIn(std::vector<User>&, User &);
+
+void SignUp(std::vector<User>&);
 
 std::istream& operator>>(std::istream& in, User& user);
 

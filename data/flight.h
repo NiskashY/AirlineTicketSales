@@ -14,7 +14,6 @@ enum class Parameter {
     Airplane,
     Date,
     Tickets,
-    FullFlight
 };
 
 class Flight {
@@ -64,9 +63,9 @@ public:
 
 };
 
-std::vector<Flight> CreateFlights();
+Parameter GetParameter();
 
-void ShowFlights();
+std::vector<Flight> CreateFlights();
 
 void ShowFlights(const std::vector<Flight>& vec);
 

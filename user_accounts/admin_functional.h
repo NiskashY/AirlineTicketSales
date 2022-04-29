@@ -1,14 +1,12 @@
 #pragma once
 #include "user.h"
+#include "../menues.h"
 
-/* ---------- ACCOUNTS ---------- */
-void AddUser(const User &user);
+#pragma region accounts
+
+void AddUser(std::vector<User>&, const User &);
 
 void IncreaseAccessLevel(User& user);
-
-bool SignIn(User& user);
-
-void SignUp();
 
 void AddUser(const User& user);
 
@@ -24,35 +22,18 @@ int SearchAccount(const std::vector<User>& users, const std::string& login);
 
 void DeleteAccount(std::vector<User>& users, const std::string& login);
 
-/* ---------- FLIGHTS ---------- */
+void EditAccount(const int& position, std::vector<User>& users);
 
-template <class T>
-void DeleteInfo(Reader& reader, std::vector<T>& data) {
-    const auto& kSuccess = "Done!";
-    const auto& kInputPositions = "Input positions you want to delete:\n";
-    const auto& kPos = "position #";
+void ConfirmAccount(const int& position);
 
-    reader.ReadFromFile(data);
-    int number = InputNumberOfDeleted();
-    std::vector<int> positions(number);
+#pragma endregion
 
-    std::cout << kInputPositions;
-    for (auto& item : positions) {
-        std::cout << kPos;
-        int pos = 0;
-        CheckNum(std::cin, pos);
-        item = pos;
-    }
+#pragma region flights
 
-    std::sort(positions.begin(),positions.end());
-    reader.DeleteObject(positions, data);
+void DeleteFlights(std::vector<Flight>&);
 
-    std::cout << '\t' << kSuccess << '\n';
-}
+void EditFlights(std::vector<Flight>&);
 
-void DeleteFlights();
+void AddFlights(std::vector<Flight>& );
 
-void EditFlights();
-
-void AddFlights();
-
+#pragma endregion

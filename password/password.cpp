@@ -30,24 +30,28 @@ std::string GenerateSalt() {
 }
 
 bool isBanned(const char& symbol) {
-    const std::string kBannedSymbols = "/\\?*-+'\"!;()%#$@^";
+    const std::string kBannedSymbols = "/\\?*-+'\"!;()%#$@^ ";
     return kBannedSymbols.find(symbol) == std::string::npos;
 }
 
 bool CheckPassword(const std::string &password) {
-    return std::all_of(password.begin(), password.end(), isBanned);
+    return std::all_of(password.begin(), password.end(), isBanned) && password.length() >= 8;
 }
 
 std::string InputPassword(std::istream& in) {
     // TODO: сделать ***** - это уже реализовать на WINDOWS
-    const auto& kInputPassword = "Input password: ";
-    const auto& kErrorMessage = "The password cannot contain /\\?*-+'\"!;()%#$@^. ReEnter:";
+    const auto& kInputPassword = "Input password(':quit' - cancel): ";
+    const auto& kErrorMessage = "The password cannot contain /\\?*-+'\"!;()%#$@^ and spaces"
+                                "\nAnd should be more than 8 characters. ReEnter: ";
     std::string password;
     bool isPasswordCorrect = false;
 
     std::cout << kInputPassword;
     do {
         getline(in, password);
+        if (password == ":quit") {
+            throw std::runtime_error(":quit");
+        }
         isPasswordCorrect = CheckPassword(password);
         if (!isPasswordCorrect) {
             std::cout << kErrorMessage;

@@ -23,7 +23,7 @@ set(SOURCE_FILES main.cpp check_num.h
 
         reader/reader.cpp
         user_accounts/user.cpp user_accounts/user.h
-        user_accounts/admin_functional.cpp user_accounts/admin_functional.h)
+        user_accounts/admin_functional.cpp user_accounts/admin_functional.h menues.cpp menues.h core.cpp core.h)
 
 add_executable(AirlineTicketSales ${SOURCE_FILES})
 

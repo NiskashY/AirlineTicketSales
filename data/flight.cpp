@@ -9,29 +9,17 @@ std::vector<Flight> CreateFlights() {
     return flights;
 }
 
-void ShowFlights(const std::vector<Flight> &vec) {
+void ShowFlights(const std::vector<Flight> &flights) {
     int position = 0;
 
-    for (auto &flight: vec) {
+    for (auto &flight: flights) {
         ++position;
-        std::cout << '#' << position << ' ' << std::left << flight << '\n';
+        std::cout << std::right <<'#' << std::setw(3) << std::setfill('0') << position << std::setfill(' ')
+                  << std::left << ' ' << flight << '\n';
     }
 }
 
-void ShowFlights() {
-    int position = 0;
-
-    std::vector<Flight> vec;
-    Reader reader("flights_database.txt");
-    reader.ReadFromFile(vec);
-
-    for (auto &flight: vec) {
-        ++position;
-        std::cout << '#' << std::setw(3) << std::left << position << ' ' << flight << '\n';
-    }
-}
-
-/*   -------------SEARCH SECTION------------- */
+#pragma region SearchSection
 
 void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights) {
     const auto& kInputDestination = "Input Flight Destination: ";
@@ -114,7 +102,9 @@ void SearchTickets(std::istream& in, std::vector<Flight>& matching_flights) {
     }
 }
 
-/* ---------------- GETTERS and SETTERS ---------------- */
+#pragma endregion
+
+#pragma region gettersAndSetters
 
 int Flight::getFlightNumber() const {
     return flight_number_;
@@ -156,7 +146,9 @@ void Flight::setTickets(const Tickets &tickets) {
     tickets_ = tickets;
 }
 
-/* ------------ OVERLOAD OPERATORS ------- */
+#pragma endregion
+
+#pragma region overloadOperators
 
 std::ostream &operator<<(std::ostream &out, const Flight &flight) {
     const int kNumbLength = 7;
@@ -197,3 +189,5 @@ bool operator<(const Flight &lhs, const Flight &rhs) {
     return std::tie(lhs.flight_number_, lhs.destination_, lhs.airplane_, lhs.date_, lhs.tickets_)
            < std::tie(rhs.flight_number_, rhs.destination_, rhs.airplane_, rhs.date_, rhs.tickets_);
 }
+
+#pragma endregion
