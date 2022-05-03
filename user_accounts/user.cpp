@@ -3,6 +3,7 @@
 #pragma region dataManipulation
 
 void User::ViewFlights(std::vector<Flight>& flights) const{
+    ShowFlightsViewHeader();
     ShowFlights(flights);
 }
 
@@ -25,12 +26,12 @@ void User::BuyTickets(std::vector<Flight>& flights) {
         }
 
         if (isBooked) {
-            std::cout << kSuccessBooked << '\n';
+            std::cout << Paint(GREEN, kSuccessBooked) << '\n';
             flights[number - 1].setTickets(available_tickets);
             reader.WriteIntoFile(flights);
             break;
         } else {
-            std::cout << kNotEnoughSeats;
+            std::cout << Paint(YELLOW, kNotEnoughSeats);
             std::string request;
             std::cin >> request;
             if (request != "1") {
@@ -41,8 +42,8 @@ void User::BuyTickets(std::vector<Flight>& flights) {
 }
 
 Parameter GetParameter() {
-    const auto &kInput = "Input Parameter for your operation\n1 - By FullFlights\n"
-                         "2 - By Airplanes\n3 - By Date\n4 - By Tickets\nYour choice: ";
+    const auto &kInput = "Input Parameter for your operation\n1 - FullFlights\n"
+                         "2 - Airplanes\n3 - Date\n4 - Tickets\nYour choice: ";
     const auto &kErrorPosition = "Your parameter should be [1; 4]. ReEnter:";
     const std::vector<Parameter> parameter_vec = {Parameter::Flight, Parameter::Airplane, Parameter::Date,
                                                   Parameter::Tickets};
@@ -50,10 +51,10 @@ Parameter GetParameter() {
     int position = 0;
     do {
         CheckNum(std::cin, position);
-        if (position < 1 || position > 5) {
+        if (position < 1 || position > 4) {
             std::cout << kErrorPosition;
         }
-    } while (position < 1 || position > 5);
+    } while (position < 1 || position > 4);
     return parameter_vec[position - 1];
 }
 
@@ -155,6 +156,10 @@ int InputAccess(std::istream& in) {
 
 User CreateNewUser(std::vector<User>& all_users) {
     const auto &kLoginExist = "Login already exist!. ReEnter: ";
+    const std::string& kInput = "Input   ";
+    const std::string& kConfirm = "Confirm ";
+    const std::string& kPassword = "Password(':quit' - cancel): ";
+
     bool isExist = true;
     std::string login;
     do {
@@ -165,7 +170,16 @@ User CreateNewUser(std::vector<User>& all_users) {
         }
     } while (isExist);
 
-    std::string password = InputPassword(std::cin);
+    std::string password;
+    std::string password_confirm;
+    do {
+        password = InputPassword(std::cin, kInput + kPassword);
+        password_confirm = InputPassword(std::cin, kConfirm + kPassword);
+        if (password != password_confirm) {
+            std::cout << "Password not equal!\n";
+        }
+    } while (password != password_confirm);
+
     const int &access = 0;
     return {login, GenerateHashPassword(password), access};
 }
@@ -174,6 +188,9 @@ bool SignIn(std::vector<User>& accounts, User &user) {
     const auto &kAccountNotFound = "Account not found!";
     const auto& kAccessDenied = "Access denied!";
     const auto& kWrongPassword = "\nWrong Password!";
+    const std::string& kPassword = "Password(':quit' - cancel): ";
+    const std::string& kInput = "Input   ";
+
     std::string login = InputLogin(std::cin);
 
     auto it = std::find_if(accounts.begin(), accounts.end(), [login](User &user_tmp) {
@@ -190,7 +207,7 @@ bool SignIn(std::vector<User>& accounts, User &user) {
 
         // This try - catch if user input ':quit' to cancel password Input
         try {
-            password = InputPassword(std::cin);
+            password = InputPassword(std::cin, kInput + kPassword);
         } catch(std::runtime_error& e) {
             return false;
         }
@@ -203,7 +220,7 @@ bool SignIn(std::vector<User>& accounts, User &user) {
                 isSignIn = true;
             }
         } else {
-            std::cout << kWrongPassword << '\n';
+            std::cout << Paint(RED, kWrongPassword) << '\n';
         }
     }
 
@@ -211,7 +228,7 @@ bool SignIn(std::vector<User>& accounts, User &user) {
 }
 
 void SignUp(std::vector<User>& accounts) {
-    const auto& kSuccess = "Account successfully added!";
+    const std::string& kSuccess = "Account successfully registered!";
     User new_user;
     std::string password;
 
@@ -224,7 +241,9 @@ void SignUp(std::vector<User>& accounts) {
 
     Reader reader(ALL_USER_ACCOUNTS);
     reader.AddObject(new_user);
-    std::cout << kSuccess << '\n';
+    accounts.push_back(new_user);
+
+    std::cout << Paint(GREEN, kSuccess) << '\n';
 }
 
 #pragma endregion
@@ -249,8 +268,12 @@ std::istream &operator>>(std::istream &in, User &user) {
     if (typeid(in) == typeid(std::ifstream)) {
         in >> user.login_ >> user.password_ >> user.access_;
     } else {
+        // This is for edit
+        const std::string& kPassword = "Password(':quit' - cancel): ";
+        const std::string& kInput = "Input   ";
+
         user.login_ = InputLogin(in);
-        user.password_ = GenerateHashPassword(InputPassword(in));
+        user.password_ = GenerateHashPassword(InputPassword(in, kInput + kPassword));
         user.access_ = InputAccess(in);
     }
     return in;

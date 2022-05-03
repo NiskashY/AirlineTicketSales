@@ -6,8 +6,10 @@
 #include "airplane.h"
 #include "date.h"
 #include "tickets.h"
-#include "../reader/reader.h"
 #include "validation_data.h"
+#include "../reader/reader.h"
+#include "../appearance/width.h"
+
 
 enum class Parameter {
     Flight,
@@ -66,6 +68,8 @@ public:
 Parameter GetParameter();
 
 std::vector<Flight> CreateFlights();
+
+void ShowFlight(const Flight&);
 
 void ShowFlights(const std::vector<Flight>& vec);
 

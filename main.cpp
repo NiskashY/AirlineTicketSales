@@ -1,10 +1,5 @@
-#include <iostream>
 #include "core.h"
-
-#define TO_ROW(num) (std::cout << "\033[" + std::to_string(num) + "G")
-#define CLEAR_LINE() (std::cout << "\033[2K")
-#define UP_LINE() (std::cout << "\033[1A")
-
+#include "reader/reader.h"
 
 int main() {
     Reader accountsReader(ALL_USER_ACCOUNTS);

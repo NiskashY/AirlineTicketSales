@@ -8,7 +8,7 @@ bool Reader::isFileNotEmpty() const {
 }
 
 int InputNumberOfDeleted() {
-    const auto& kInputNumber = "Input number of deleting elements: ";
+    const auto& kInputNumber = "Input amount of deleting elements: ";
     const auto &kInvalidAmount = "Amount cant be less then 0. ReEnter: ";
     const int &kMinValue = 0;
 

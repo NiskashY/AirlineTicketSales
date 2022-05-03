@@ -9,6 +9,7 @@
 #include "../check_num.h"
 #include "../reader/reader.h"
 #include "validation_data.h"
+#include "../appearance/width.h"
 
 struct Tickets {
     int capacity = 0; // this field for correct amount of available seats (copy of airplane capacity)
@@ -17,6 +18,8 @@ struct Tickets {
     int available_in_economy_ = 0;
     int price_of_economy_ = 0;
 };
+
+void ShowTickets(const Tickets&);
 
 std::istream &operator>>(std::istream &in, Tickets &tickets);
 

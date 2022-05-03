@@ -54,21 +54,32 @@ int InputAmountTickets() {
 
 int InputNumberOfFlight(const size_t &total_flights) {
     int number = 0;
-    const auto &kInput = "Input number of flight you want too book: ";
+    const std::string &kInput = "Input number of flight you want too book: ";
     const auto &kInvalidNumber = "The Flight with this number does not exist!";
     const int  &kMinNumber = 1;
+    int errors = 0;
+
     do {
-        std::cout << kInput << '\n';
+        std::cout << kInput;
         CheckNum(std::cin, number);
         if (number < kMinNumber || number > total_flights) {
-            std::cout << "<number #" << number << ">  - " << "\x1b[31m" << kInvalidNumber << "\x1b[0m\n";
+            std::cout << "<number #" << number << ">  - " << Paint(RED, kInvalidNumber);
+            GO_UP_LINE();
+            CLEAR_LINE();
+            GO_TO_COLUMN(0);
+            ++errors;
         }
     } while (number < kMinNumber || number > total_flights);
+
+    if (errors) {
+        CLEAR_LINE();
+        GO_TO_COLUMN(0);
+    }
 
     return number;
 }
 
-/*-------------- AIRPLANE VALIDATION ----------*/
+#pragma region FlightsValidation
 
 int InputFlightNumber(std::istream &in) {
     int number = 0;
@@ -140,7 +151,9 @@ int InputAirplaneCapacity(std::istream &in) {
     return capacity;
 }
 
-/*-------------- TICKETS VALIDATION ----------*/
+#pragma endregion
+
+#pragma region TicketsValidation
 
 int InputSeatsAmount(std::istream &in, const std::string &class_type, const int &kSeatsAvailable) {
     int seats_amount = 0;
@@ -167,7 +180,9 @@ int InputPrice(std::istream &in, const std::string &class_type) {
     return price;
 }
 
-/*-------------- DATE VALIDATION ----------*/
+#pragma endregion
+
+#pragma region DateValidation
 
 void EnsureSymbol(std::stringstream &stream) {
     char symbol;
@@ -243,7 +258,9 @@ std::string InputDate(std::istream &in) {
     return date_tmp;
 }
 
-/*-------------- TIME VALIDATION ----------*/
+#pragma endregion
+
+#pragma region TimeValidation
 
 void isHoursCorrect(int &day) {
     if  (day < 0 || day > 24) {
@@ -299,3 +316,6 @@ std::string InputTime(std::istream &in, const std::string& type_of_date) {
 
     return time_tmp;
 }
+
+#pragma endregion
+

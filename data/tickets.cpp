@@ -1,5 +1,18 @@
 #include "tickets.h"
 
+void ShowTickets(const Tickets& tickets) {
+    const auto &kDelim = "|";
+
+    std::cout << std::setw(width::kNumbLength) << tickets.available_in_business_
+              << std::setw(width::kDelim) << kDelim
+              << std::setw(width::kNumbLength) << tickets.price_of_business_
+              << std::setw(width::kDelim) << kDelim
+              << std::setw(width::kNumbLength) << tickets.available_in_economy_
+              << std::setw(width::kDelim) << kDelim
+              << std::setw(width::kNumbLength) << tickets.price_of_economy_
+              << std::setw(width::kDelim) << kDelim;
+}
+
 std::istream &operator>>(std::istream &in, Tickets &tickets) {
     if (typeid(in) == typeid(std::ifstream)) {
         in >> tickets.available_in_business_ >> tickets.price_of_business_ >> tickets.available_in_economy_ >> tickets.price_of_economy_;
@@ -17,10 +30,10 @@ std::istream &operator>>(std::istream &in, Tickets &tickets) {
 std::ostream &operator<<(std::ostream &out, const Tickets &tickets) {
     const int kNumbLength = 7;
 
-    out << std::setw(kNumbLength) << tickets.available_in_business_
-        << std::setw(kNumbLength) << tickets.price_of_business_
-        << std::setw(kNumbLength) << tickets.available_in_economy_
-        << std::setw(kNumbLength) << tickets.price_of_economy_;
+    out << tickets.available_in_business_ << ' '
+        << tickets.price_of_business_ << ' '
+        << tickets.available_in_economy_ << ' '
+        << tickets.price_of_economy_;
     return out;
 }
 

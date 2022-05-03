@@ -11,18 +11,19 @@ bool isUserWantAnotherClass() {
 }
 
 bool BookTicket(Tickets &available_tickets, bool &isBooked) {
-    const auto &kProposeClass = "Input type of ticket:\n1 - Economy\n2 - Business\nelse - exit\tYour choice: ";
-    std::cout << kProposeClass;
+    const auto &kProposeClass = "Input type of ticket:\n1 - Economy\n2 - Business\nelse - back\tYour choice: ";
+    std::cout << '\n' << kProposeClass;
     std::string type;
     std::cin >> type;
 
-    int amount_of_tickets = InputAmountTickets();
     if (type == "1") {
+        int amount_of_tickets = InputAmountTickets();
         isBooked = BookEconomy(available_tickets, amount_of_tickets);
         if (!isBooked && isUserWantAnotherClass()) {
             isBooked = BookBusiness(available_tickets, amount_of_tickets);
         }
     } else if (type == "2") {
+        int amount_of_tickets = InputAmountTickets();
         isBooked = BookBusiness(available_tickets, amount_of_tickets);
         if (!isBooked && isUserWantAnotherClass()) {
             isBooked = BookEconomy(available_tickets, amount_of_tickets);

@@ -1,5 +1,16 @@
 #include "date.h"
 
+void ShowDate(const Date& date) {
+    const auto &kDelim = "|";
+
+    std::cout << std::setw(width::kDateLength) << date.departure_date_
+              << std::setw(width::kDelim) << kDelim
+              << std::setw(width::kTimeLength) << date.departure_time_
+              << std::setw(width::kDelim) << kDelim
+              << std::setw(width::kTimeLength) << date.arrival_time_
+              << std::setw(width::kDelim) << kDelim;
+}
+
 std::istream &operator>>(std::istream &in, Date &date) {
     if (typeid(in) == typeid(std::ifstream)) { // input is file - transfer information into files without validation.
         in >> date.departure_date_ >> date.departure_time_ >> date.arrival_time_;
@@ -12,12 +23,7 @@ std::istream &operator>>(std::istream &in, Date &date) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Date &date) {
-    const int kTimeLength = 8;
-    const int kDateLength = 13;
-
-    out << std::setw(kDateLength) << date.departure_date_
-        << std::setw(kTimeLength) << date.departure_time_
-        << std::setw(kTimeLength) << date.arrival_time_;
+    out << date.departure_date_ << ' ' << date.departure_time_ << ' ' << date.arrival_time_;
     return out;
 }
 

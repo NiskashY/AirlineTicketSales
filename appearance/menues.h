@@ -2,11 +2,15 @@
 
 #include <iostream>
 #include <iomanip>
+#include "width.h"
+#include "colors.h"
+
+void ShowFlightsViewHeader();
 
 void ShowAccountViewHeader();
 
 // TODO :
-void ShowFligthViewSection();
+void ShowFlightViewSection();
 
 void ShowStartMenu();
 
@@ -20,3 +24,5 @@ void ShowAdminFLightsSection();
 void ShowAdminAccountsSection();
 
 void ShowAccountMenuSort();
+
+void PasswordMenu();

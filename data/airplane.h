@@ -7,11 +7,14 @@
 
 #include "../check_num.h"
 #include "validation_data.h"
+#include "../appearance/width.h"
 
 struct Airplane {
     std::string type_;
     int capacity_ = 0;
 };
+
+void ShowAirplane(const Airplane&);
 
 std::istream& operator>> (std::istream& in, Airplane& airplane);
 

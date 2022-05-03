@@ -9,13 +9,31 @@ std::vector<Flight> CreateFlights() {
     return flights;
 }
 
+void ShowFlight(const Flight& flight) {
+    const auto &kDelim = "|";
+
+    std::cout << std::fixed
+              << std::setw(width::kWordLength) << flight.getDestination()
+              << std::setw(width::kDelim) << kDelim
+              << std::setw(width::kNumbLength) << flight.getFlightNumber()
+              << std::setw(width::kDelim) << kDelim;
+    ShowAirplane(flight.getAirplane());
+    ShowDate(flight.getDate());
+    ShowTickets(flight.getTickets());
+
+    // line separator
+    std::cout << '\n' << std::fixed << std::setfill('=') << std::setw(width::kTable) << '=' << std::setfill(' ');
+}
+
 void ShowFlights(const std::vector<Flight> &flights) {
     int position = 0;
 
     for (auto &flight: flights) {
         ++position;
         std::cout << std::right <<'#' << std::setw(3) << std::setfill('0') << position << std::setfill(' ')
-                  << std::left << ' ' << flight << '\n';
+                  << std::left << " | ";
+        ShowFlight(flight);
+        std::cout << '\n';
     }
 }
 
@@ -151,14 +169,10 @@ void Flight::setTickets(const Tickets &tickets) {
 #pragma region overloadOperators
 
 std::ostream &operator<<(std::ostream &out, const Flight &flight) {
-    const int kNumbLength = 7;
-    const int kWordLength = 16;
-
-    out << std::fixed
-        << std::setw(kWordLength) << flight.destination_
-        << std::setw(kNumbLength) << flight.flight_number_
-        << flight.airplane_
-        << flight.date_
+    out << flight.destination_ << ' '
+        << flight.flight_number_ << ' '
+        << flight.airplane_ << ' '
+        << flight.date_ << ' '
         << flight.tickets_;
 
     return out;
@@ -175,7 +189,6 @@ std::istream &operator>>(std::istream &in, Flight &flight) {
         in >> flight.airplane_ >> flight.date_;
         flight.tickets_.capacity = flight.airplane_.capacity_; // this is for correct amount of seats in tickets.
         in >> flight.tickets_;
-
     }
     return in;
 }

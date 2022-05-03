@@ -22,7 +22,6 @@ void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
                 }
             } else if (tmp == 2) {
                 SignUp(accounts);
-                continue;
             } else {
                 exit(EXIT_SUCCESS);
             }
@@ -40,7 +39,12 @@ void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
                     isSignIn = false;
                 }
             } else {
-                DefaultUserFlightSection(flights, user);
+                try {
+                    DefaultUserFlightSection(flights, user);
+                } catch( std::runtime_error& e) {
+                    isSignIn = false;
+                    continue;
+                }
             }
         }
         getch();
@@ -69,16 +73,16 @@ void DefaultUserFlightSection(std::vector<Flight>& flights, User& user, int tmp)
                 const auto& kNotMatch = "No flights meets your requirements!";
                 std::cout << kNotMatch << '\n';
             }
-            ShowFlights(result);
+            user.ViewFlights(result);
             break;
         }
         case 4: {
             auto result = user.SortFlights(flights);
-            ShowFlights(result);
+            user.ViewFlights(result);
             break;
         }
         default : {
-            return;
+            throw std::runtime_error("back");
         }
     }
 }
@@ -104,6 +108,7 @@ void AdminFlightSection(User &user, std::vector<Flight>& flights) {
                 break;
             }
             case 7: {
+                user.ViewFlights(flights);
                 EditFlights(flights);
                 break;
             }
@@ -121,24 +126,22 @@ void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& fligh
         int tmp = 0;
         CheckNum(std::cin, tmp);
         switch (tmp) {
-            case 1 : {
-                std::string login = InputLogin(std::cin);
-                DeleteAccount(accounts, login);
+            case 1: case 3:  {
+                ViewUsers(accounts);
+                if (tmp == 3) {
+                    int position = 0;
+                    position = InputEditedPosition();
+                    EditAccount(position, accounts);
+                }
                 break;
             }
             case 2: {
                 AddUser(accounts, CreateNewUser(accounts));
                 break;
             }
-            case 3: case 4:  {
-                ViewUsers(accounts);
-                if (tmp == 3) {
-                    const auto &kInput = "Input position you want to edit: ";
-                    int position = 0;
-                    std::cout << kInput;
-                    CheckNum(std::cin, position);
-                    EditAccount(position, accounts);
-                }
+            case 4 : {
+                std::string login = InputLogin(std::cin);
+                DeleteAccount(accounts, login);
                 break;
             }
             case 5: {

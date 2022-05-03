@@ -1,6 +1,6 @@
 #pragma once
 #include "user.h"
-#include "../menues.h"
+#include "../appearance/menues.h"
 
 #pragma region accounts
 
@@ -22,9 +22,11 @@ int SearchAccount(const std::vector<User>& users, const std::string& login);
 
 void DeleteAccount(std::vector<User>& users, const std::string& login);
 
-void EditAccount(const int& position, std::vector<User>& users);
+void EditAccount(int& position, std::vector<User>& users);
 
-void ConfirmAccount(const int& position);
+void IncreaseAccessLevel(const int &position, std::vector<User> &users);
+void DecreaseAccessLevel(const int &position, std::vector<User> &users);
+void BlockAccount(const int &position, std::vector<User> &users);
 
 #pragma endregion
 

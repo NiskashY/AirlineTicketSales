@@ -121,17 +121,29 @@ build CMakeFiles/AirlineTicketSales.dir/user_accounts/admin_functional.cpp.o: CX
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
   OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/user_accounts
 
-build CMakeFiles/AirlineTicketSales.dir/menues.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/menues.cpp || cmake_object_order_depends_target_AirlineTicketSales
-  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/menues.cpp.o.d
+build CMakeFiles/AirlineTicketSales.dir/appearance/menues.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/appearance/menues.cpp || cmake_object_order_depends_target_AirlineTicketSales
+  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/appearance/menues.cpp.o.d
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
-  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir
+  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/appearance
 
 build CMakeFiles/AirlineTicketSales.dir/core.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/core.cpp || cmake_object_order_depends_target_AirlineTicketSales
   DEP_FILE = CMakeFiles/AirlineTicketSales.dir/core.cpp.o.d
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
   OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir
+
+build CMakeFiles/AirlineTicketSales.dir/appearance/width.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/appearance/width.cpp || cmake_object_order_depends_target_AirlineTicketSales
+  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/appearance/width.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
+  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/appearance
+
+build CMakeFiles/AirlineTicketSales.dir/appearance/colors.cpp.o: CXX_COMPILER__AirlineTicketSales_Debug /home/mint/CLionProjects/AirlineTicketSaless/appearance/colors.cpp || cmake_object_order_depends_target_AirlineTicketSales
+  DEP_FILE = CMakeFiles/AirlineTicketSales.dir/appearance/colors.cpp.o.d
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
+  OBJECT_FILE_DIR = CMakeFiles/AirlineTicketSales.dir/appearance
 
 
 # =============================================================================
@@ -141,7 +153,7 @@ build CMakeFiles/AirlineTicketSales.dir/core.cpp.o: CXX_COMPILER__AirlineTicketS
 #############################################
 # Link the executable AirlineTicketSales
 
-build AirlineTicketSales: CXX_EXECUTABLE_LINKER__AirlineTicketSales_Debug CMakeFiles/AirlineTicketSales.dir/main.cpp.o CMakeFiles/AirlineTicketSales.dir/data/tickets.cpp.o CMakeFiles/AirlineTicketSales.dir/data/airplane.cpp.o CMakeFiles/AirlineTicketSales.dir/data/date.cpp.o CMakeFiles/AirlineTicketSales.dir/data/flight.cpp.o CMakeFiles/AirlineTicketSales.dir/password/password.cpp.o CMakeFiles/AirlineTicketSales.dir/password/sha256.cpp.o CMakeFiles/AirlineTicketSales.dir/data/ticket_purchase.cpp.o CMakeFiles/AirlineTicketSales.dir/data/validation_data.cpp.o CMakeFiles/AirlineTicketSales.dir/reader/reader.cpp.o CMakeFiles/AirlineTicketSales.dir/user_accounts/user.cpp.o CMakeFiles/AirlineTicketSales.dir/user_accounts/admin_functional.cpp.o CMakeFiles/AirlineTicketSales.dir/menues.cpp.o CMakeFiles/AirlineTicketSales.dir/core.cpp.o
+build AirlineTicketSales: CXX_EXECUTABLE_LINKER__AirlineTicketSales_Debug CMakeFiles/AirlineTicketSales.dir/main.cpp.o CMakeFiles/AirlineTicketSales.dir/data/tickets.cpp.o CMakeFiles/AirlineTicketSales.dir/data/airplane.cpp.o CMakeFiles/AirlineTicketSales.dir/data/date.cpp.o CMakeFiles/AirlineTicketSales.dir/data/flight.cpp.o CMakeFiles/AirlineTicketSales.dir/password/password.cpp.o CMakeFiles/AirlineTicketSales.dir/password/sha256.cpp.o CMakeFiles/AirlineTicketSales.dir/data/ticket_purchase.cpp.o CMakeFiles/AirlineTicketSales.dir/data/validation_data.cpp.o CMakeFiles/AirlineTicketSales.dir/reader/reader.cpp.o CMakeFiles/AirlineTicketSales.dir/user_accounts/user.cpp.o CMakeFiles/AirlineTicketSales.dir/user_accounts/admin_functional.cpp.o CMakeFiles/AirlineTicketSales.dir/appearance/menues.cpp.o CMakeFiles/AirlineTicketSales.dir/core.cpp.o CMakeFiles/AirlineTicketSales.dir/appearance/width.cpp.o CMakeFiles/AirlineTicketSales.dir/appearance/colors.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/AirlineTicketSales.dir
   POST_BUILD = :

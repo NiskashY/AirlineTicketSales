@@ -5,9 +5,13 @@
 #include "../password/password.h"
 #include "../data/flight.h"
 #include "../data/ticket_purchase.h"
+#include "../appearance/menues.h"
+#include "../appearance/colors.h"
 
 #define ALL_USER_ACCOUNTS "user_accounts.txt"
 #define FLIGHTS_DATABASE "flights_database.txt"
+
+// Manipulation of cursor in console
 
 class User {
 private:

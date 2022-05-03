@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include "sha256.h"
+#include "../appearance/colors.h"
 
 struct Password {
     std::string salted_hash_password;
@@ -23,7 +24,7 @@ std::string GetHash(const std::string& pass, const std::string& salt);
 
 bool CheckPassword(const std::string& password);
 
-std::string InputPassword(std::istream& in);
+std::string InputPassword(std::istream& in, const std::string& mode);
 
 std::ostream &operator<<(std::ostream &out, const Password& password);
 

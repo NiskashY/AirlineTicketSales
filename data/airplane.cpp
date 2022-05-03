@@ -1,5 +1,14 @@
 #include "airplane.h"
 
+void ShowAirplane(const Airplane& airplane) {
+    const auto& kDelim = "|";
+
+    std::cout << std::setw(width::kWordLength) << airplane.type_
+            << std::setw(width::kDelim) << kDelim
+            << std::setw(width::kNumbLength) << airplane.capacity_
+            << std::setw(width::kDelim) << kDelim;
+}
+
 std::istream &operator>>(std::istream &in, Airplane &airplane) {
     if (typeid(in) == typeid(std::ifstream)) {
         in >> airplane.type_ >> airplane.capacity_;
@@ -12,10 +21,7 @@ std::istream &operator>>(std::istream &in, Airplane &airplane) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Airplane &airplane) {
-    const int kNumbLength = 7;
-    const int kWordLength = 16;
-    out << std::setw(kWordLength) << airplane.type_
-        << std::setw(kNumbLength) << airplane.capacity_;
+    out << airplane.type_ << ' ' << airplane.capacity_;
     return out;
 }
 

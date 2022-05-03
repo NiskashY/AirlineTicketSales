@@ -6,6 +6,7 @@
 #include <iomanip>
 
 #include "../check_num.h"
+#include "../appearance/width.h"
 #include "validation_data.h"
 
 struct Date {
@@ -13,6 +14,8 @@ struct Date {
     std::string departure_time_;
     std::string arrival_time_;
 };
+
+void ShowDate(const Date&);
 
 std::istream &operator>>(std::istream &in, Date &date);
 

@@ -38,39 +38,46 @@ bool CheckPassword(const std::string &password) {
     return std::all_of(password.begin(), password.end(), isBanned) && password.length() >= 8;
 }
 
-std::string InputPassword(std::istream& in) {
+std::string InputPassword(std::istream& in, const std::string& mode) {
     // TODO: сделать ***** - это уже реализовать на WINDOWS
-    const auto& kInputPassword = "Input password(':quit' - cancel): ";
     const auto& kErrorMessage = "The password cannot contain /\\?*-+'\"!;()%#$@^ and spaces"
-                                "\nAnd should be more than 8 characters. ReEnter: ";
+                                "\nAnd should be more than 8 characters. ReEnter.";
     std::string password;
     bool isPasswordCorrect = false;
+    int incorrect_passwords = 0; // check if users input incorrect pass, and if so clear ErrorMessage
 
-    std::cout << kInputPassword;
     do {
+        std::cout << mode;
         getline(in, password);
         if (password == ":quit") {
             throw std::runtime_error(":quit");
         }
         isPasswordCorrect = CheckPassword(password);
         if (!isPasswordCorrect) {
-            std::cout << kErrorMessage;
+            std::cout << Paint(RED, kErrorMessage);
+            GO_UP_LINE();
+            GO_UP_LINE();
+            CLEAR_LINE();
+            GO_TO_COLUMN(0);
+            incorrect_passwords++;
         }
     } while (!isPasswordCorrect);
+
+    if (incorrect_passwords) {
+        GO_DOWN_LINE();
+        CLEAR_LINE();
+        GO_UP_LINE();
+        CLEAR_LINE();
+    }
 
     return password;
 }
 
-Password SignUpInputPassword(std::istream &in) {
-    auto password = InputPassword(in);
-    return GenerateHashPassword(password);
-}
-
 std::ostream &operator<<(std::ostream &out, const Password &password) {
-    out << password.salted_hash_password << ' ';
+    out << password.salted_hash_password;
 
     if (typeid(out) == typeid(std::ofstream)) {
-        out << password.salt;
+        out << ' ' << password.salt;
     }
 
     return out;

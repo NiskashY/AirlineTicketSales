@@ -2,6 +2,7 @@
 
 #include <sstream>
 
+#include "../appearance/colors.h"
 #include "../check_num.h"
 
 int InputEditedPosition();
