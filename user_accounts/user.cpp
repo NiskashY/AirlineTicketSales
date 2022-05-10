@@ -2,7 +2,7 @@
 
 #pragma region dataManipulation
 
-void User::ViewFlights(std::vector<Flight>& flights) const{
+void User::ViewFlights(const std::vector<Flight>& flights) const{
     ShowFlightsViewHeader();
     ShowFlights(flights);
 }
@@ -90,7 +90,7 @@ std::vector<Flight> User::SearchFlights() {
     return matching_flights;
 }
 
-std::vector<Flight> User::SortFlights(std::vector<Flight>& data) {
+std::vector<Flight> User::SortFlights(std::vector<Flight> data) {
     // Parameter - what information we want to find
     switch (GetParameter()) {
         case Parameter::Flight : {
@@ -156,7 +156,7 @@ int InputAccess(std::istream& in) {
 
 User CreateNewUser(std::vector<User>& all_users) {
     const auto &kLoginExist = "Login already exist!. ReEnter: ";
-    const std::string& kInput = "Input   ";
+    const std::string& kInput = "Input ";
     const std::string& kConfirm = "Confirm ";
     const std::string& kPassword = "Password(':quit' - cancel): ";
 
@@ -189,7 +189,7 @@ bool SignIn(std::vector<User>& accounts, User &user) {
     const auto& kAccessDenied = "Access denied!";
     const auto& kWrongPassword = "\nWrong Password!";
     const std::string& kPassword = "Password(':quit' - cancel): ";
-    const std::string& kInput = "Input   ";
+    const std::string& kInput = "Input ";
 
     std::string login = InputLogin(std::cin);
 
@@ -270,7 +270,7 @@ std::istream &operator>>(std::istream &in, User &user) {
     } else {
         // This is for edit
         const std::string& kPassword = "Password(':quit' - cancel): ";
-        const std::string& kInput = "Input   ";
+        const std::string& kInput = "Input ";
 
         user.login_ = InputLogin(in);
         user.password_ = GenerateHashPassword(InputPassword(in, kInput + kPassword));

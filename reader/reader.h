@@ -90,7 +90,7 @@ public:
         const auto &kWarning = "WARNING: are you sure you want to delete ";
         const auto &kWarningMenu = "'YES' - i want delete\n'Root-YES' - I want to delete, but no longer ask for confirmation\n"
                                    "'quit' - leave\n else - skip";
-        const auto &kChoice = "Your Choice:\t";
+        const auto &kChoice = "Your Choice: ";
 
         // TODO: add const string to strings below
         bool isErased = false;
@@ -105,7 +105,7 @@ public:
                 std::string request;
                 if (isNeedToWarning) { // WARNING CHECK
                     std::cout << Paint(RED, kWarning) << kStrPosition << "?\n"
-                              << Paint(RED, kWarningMenu) << kChoice;
+                              << Paint(RED, kWarningMenu) << '\n' << kChoice;
                     std::cin >> request;
                 }
 

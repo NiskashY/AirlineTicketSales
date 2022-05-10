@@ -26,13 +26,13 @@ public:
                                                                                   access_(access) {}
 
     // Basic user functions
-    void ViewFlights(std::vector<Flight>&) const;
+    void ViewFlights(const std::vector<Flight>&) const;
 
     void BuyTickets(std::vector<Flight>&);
 
     std::vector<Flight> SearchFlights();
 
-    std::vector<Flight> SortFlights(std::vector<Flight>&);
+    std::vector<Flight> SortFlights(std::vector<Flight>);
 
     // ---Getters ad setters---
     int getAccess() const;

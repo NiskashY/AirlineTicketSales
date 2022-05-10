@@ -4,7 +4,7 @@ bool isUserWantAnotherClass() {
     const auto &kNotEnoughSeats = "There are not enough seats available to buy so many tickets in this class.";
     const auto &kProposeAnotherClass = "Would you like to book a seat in another class?\n1 - YES\nelse - NO\tYour choice: ";
 
-    std::cout << kNotEnoughSeats << '\n' << kProposeAnotherClass;
+    std::cout << Paint(YELLOW, kNotEnoughSeats) << '\n' << Paint(YELLOW, kProposeAnotherClass);
     std::string answer;
     std::cin >> answer;
     return answer == "1";

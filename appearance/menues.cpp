@@ -34,7 +34,7 @@ void ShowFlightsViewHeader() {
     const std::string &kSeparator = "|";
 
     // Table line separator
-    std::cout << '\n' << std::fixed << std::setfill('-') << std::setw(width::kTable) << '-' << std::setfill(' ')
+    std::cout << std::fixed << std::setfill('-') << std::setw(width::kTable) << '-' << std::setfill(' ')
               << '\n';
 
     std::cout << std::fixed << std::right
@@ -104,7 +104,7 @@ void ShowAccountViewHeader() {
     const auto &kSeparator = "|";
     const std::string &kPos = "Pos.";
 
-    std::cout << '\n' << std::fixed << std::setfill('-') << std::setw(width::kTableAccounts) << '-' << std::setfill(' ')
+    std::cout << std::fixed << std::setfill('-') << std::setw(width::kTableAccounts) << '-' << std::setfill(' ')
               << '\n';
 
     std::cout << std::fixed << std::right

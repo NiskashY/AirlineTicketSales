@@ -16,7 +16,7 @@ void ViewUsers(const std::vector<User>& accounts);
 
 void ViewUsers();
 
-void SortAccounts(std::vector<User>& users, const int& parameter);
+std::vector<User> SortAccounts(std::vector<User> users, const int& parameter);
 
 int SearchAccount(const std::vector<User>& users, const std::string& login);
 

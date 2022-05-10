@@ -7,6 +7,18 @@ void getch() {  // this is for linux-clion to prevent immediately closing after 
     getline(std::cin, a);
 }
 
+bool isNeedToExit() {
+    const auto& kSure = "Are you sure you want to exit? 1 - yes, else - no";
+    const auto& kChoice = "Your choice: ";
+    std::cout << Paint(BACK_RED, kSure) << '\n' << kChoice;
+    int isNeedToExit = 0;
+    CheckNum(std::cin, isNeedToExit);
+    if (isNeedToExit == 1) {
+        return false;
+    }
+    return true;
+}
+
 void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
     bool isSignIn = false;
     User user;
@@ -36,13 +48,13 @@ void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
                     system("clear");
                     AdminAccountSection(accounts, flights);
                 } else {
-                    isSignIn = false;
+                    isSignIn = isNeedToExit();
                 }
             } else {
-                try {
+                try { // exception occurs if the user select 'exit' (this function is only here)
                     DefaultUserFlightSection(flights, user);
                 } catch( std::runtime_error& e) {
-                    isSignIn = false;
+                    isSignIn = isNeedToExit();
                     continue;
                 }
             }
@@ -58,10 +70,13 @@ void DefaultUserFlightSection(std::vector<Flight>& flights, User& user, int tmp)
         const auto &kChoice = "Your choice: ";
         std::cout << kBack << '\n' << kChoice;
         CheckNum(std::cin, tmp);
+        std::cout << '\n';
     }
     switch(tmp) {
         case 1: case 2: {
             user.ViewFlights(flights);
+
+            std::cout << '\n';
             if (tmp == 2) {
                 user.BuyTickets(flights);
             }
@@ -71,14 +86,17 @@ void DefaultUserFlightSection(std::vector<Flight>& flights, User& user, int tmp)
             auto result = user.SearchFlights();
             if (result.empty()) {
                 const auto& kNotMatch = "No flights meets your requirements!";
-                std::cout << kNotMatch << '\n';
+                std::cout << Paint(YELLOW, kNotMatch) << '\n';
+            } else {
+                std::cout << '\n';
+                user.ViewFlights(result);
             }
-            user.ViewFlights(result);
             break;
         }
         case 4: {
-            auto result = user.SortFlights(flights);
-            user.ViewFlights(result);
+            std::cout << '\n';
+            user.ViewFlights(user.SortFlights(flights));
+            std::cout << '\n';
             break;
         }
         default : {
@@ -93,6 +111,8 @@ void AdminFlightSection(User &user, std::vector<Flight>& flights) {
         ShowAdminFLightsSection();
         int tmp = 0;
         CheckNum(std::cin, tmp);
+
+        std::cout << '\n';
         switch (tmp) {
             case 1 : case 2: case 3: case 4 :{
                 DefaultUserFlightSection(flights, user, tmp);
@@ -125,9 +145,11 @@ void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& fligh
         ShowAdminAccountsSection();
         int tmp = 0;
         CheckNum(std::cin, tmp);
+        std::cout << '\n';
         switch (tmp) {
             case 1: case 3:  {
                 ViewUsers(accounts);
+                std::cout << '\n';
                 if (tmp == 3) {
                     int position = 0;
                     position = InputEditedPosition();
@@ -136,7 +158,13 @@ void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& fligh
                 break;
             }
             case 2: {
-                AddUser(accounts, CreateNewUser(accounts));
+                const auto& kNewUser = "NEW USER:";
+                std::cout << Paint(YELLOW, kNewUser) << '\n';
+                try {
+                    AddUser(accounts, CreateNewUser(accounts));
+                } catch(std::runtime_error& e) {
+                    std::cout << Paint(BLUE, "back")     << '\n';
+                }
                 break;
             }
             case 4 : {
@@ -145,11 +173,13 @@ void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& fligh
                 break;
             }
             case 5: {
-                int parameter = 0;
+                int parameter = 0, min_parameter = 0, max_parameter = 5;
                 ShowAccountMenuSort();
                 CheckNum(std::cin, parameter);
-                SortAccounts(accounts, parameter);
-                ViewUsers(accounts);
+                if (parameter > min_parameter && parameter < max_parameter) { // parameter can be from 1 to 4, else - exit
+                    std::cout << '\n';
+                    ViewUsers(SortAccounts(accounts, parameter));
+                }
                 break;
             }
             default:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+
 #include "data/flight.h"
 #include "data/ticket_purchase.h"
 #include "reader/reader.h"
@@ -9,6 +10,8 @@
 #include "appearance/menues.h"
 
 void getch();
+
+bool isNeedToExit();
 
 void Core(std::vector<User>&, std::vector<Flight>&);
 

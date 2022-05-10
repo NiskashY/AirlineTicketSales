@@ -22,12 +22,15 @@ void ShowUser(const User &user) {
               << std::setw(width::kDelim) << kSeparator;
 
     if (access_tmp == 0) {
-        std::cout << std::setw(width::kAccess) << kNotApproved;
+        std::cout << BLUE << std::setw(width::kAccess)
+                  << kNotApproved; // если управляющие символы ansi после setw - ломается вывод
     } else if (access_tmp == 1) {
-        std::cout << std::setw(width::kAccess) << kApprovedUser;
+        std::cout << GREEN << std::setw(width::kAccess) << kApprovedUser;
     } else {
-        std::cout << std::setw(width::kAccess) << kAdmin;
+        std::cout << RED << std::setw(width::kAccess) << kAdmin;
     }
+
+    std::cout << RESET_COLOR;
 
     std::cout << std::setw(width::kDelim) << kSeparator;
     std::cout << '\n';
@@ -38,9 +41,16 @@ void ViewUsers(const std::vector<User>& accounts) {
     int position = 0;
     for (auto& item : accounts) {
         position++;
+
+        if (position % 2) {
+            std::cout << BACK_GREY;
+        }
+
         std::cout << std::right <<'#' << std::setw(3) << std::setfill('0') << position << std::setfill(' ')
                   << std::left << " | ";
+
         ShowUser(item);
+        std::cout << RESET_COLOR;
     }
 }
 
@@ -60,7 +70,7 @@ bool descendingAccess(const User& lhs, const User& rhs) {
     return lhs.getAccess() > rhs.getAccess();
 }
 
-void SortAccounts(std::vector<User>& users, const int& parameter) {
+std::vector<User> SortAccounts(std::vector<User> users, const int& parameter) {
     bool (*predicate)(const User&, const User&); // pointer to the function from above
     switch(parameter) {
         case 1: {
@@ -79,11 +89,9 @@ void SortAccounts(std::vector<User>& users, const int& parameter) {
             predicate = descendingAccess;
             break;
         }
-        default: {
-            return;
-        }
     }
     std::sort(users.begin(), users.end(), predicate);
+    return users;
 }
 
 int SearchAccount(const std::vector<User>& users, const std::string& login) {
@@ -177,8 +185,6 @@ void BlockAccount(const int &position, std::vector<User> &users) {
     users[position].setAccess(blocked_access);
 }
 
-
-
 #pragma endregion
 
 #pragma region flights
@@ -209,6 +215,7 @@ void DeleteFlights(std::vector<Flight>& flights) {
 void EditFlights(std::vector<Flight>& flights) {
     Reader reader(FLIGHTS_DATABASE);
     const auto& kNewInfo = "NEW INFORMATION: ";
+    const auto& kSuccess = "Information successfully edited!";
     int position = InputEditedPosition();
     Flight old_flight;
 
@@ -254,6 +261,8 @@ void EditFlights(std::vector<Flight>& flights) {
     }
     flights[position] = old_flight;
     reader.WriteIntoFile(flights);
+
+    std::cout << '\n' << Paint(GREEN, kSuccess) << '\n';
 }
 
 void AddFlights(std::vector<Flight>& all_flights) {
