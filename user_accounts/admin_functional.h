@@ -20,7 +20,7 @@ std::vector<User> SortAccounts(std::vector<User> users, const int& parameter);
 
 int SearchAccount(const std::vector<User>& users, const std::string& login);
 
-void DeleteAccount(std::vector<User>& users, const std::string& login);
+void DeleteAccount(const User&, std::vector<User>&, const std::string&);
 
 void EditAccount(int& position, std::vector<User>& users);
 

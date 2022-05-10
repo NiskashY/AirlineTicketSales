@@ -9,7 +9,8 @@ void AddUser(std::vector<User>& accounts, const User &user) {
 }
 
 void ShowUser(const User &user) {
-    const auto &kAdmin = "Admin";
+    const std::string &kMain = "Main";
+    std::string kAdmin = "Admin";
     const auto &kApprovedUser = "User";
     const auto &kNotApproved = "awaits confirmation";
     const auto &kSeparator = "|";
@@ -27,6 +28,9 @@ void ShowUser(const User &user) {
     } else if (access_tmp == 1) {
         std::cout << GREEN << std::setw(width::kAccess) << kApprovedUser;
     } else {
+        if (access_tmp == 3) {
+            kAdmin = kMain + " " + kAdmin;
+        }
         std::cout << RED << std::setw(width::kAccess) << kAdmin;
     }
 
@@ -52,6 +56,8 @@ void ViewUsers(const std::vector<User>& accounts) {
         ShowUser(item);
         std::cout << RESET_COLOR;
     }
+    std::cout << std::fixed << std::setfill('-') << std::setw(width::kTableAccounts) << '-' << std::setfill(' ')
+              << '\n';
 }
 
 bool ascendingLogin(const User& lhs, const User& rhs) {
@@ -103,14 +109,20 @@ int SearchAccount(const std::vector<User>& users, const std::string& login) {
         std::cout << kNotMatch << '\n';
         return -1; // user with this login doesn't exist
     } else {
-        return int(it - users.begin());
+        return int(it - users.begin() + 1);
     }
 }
 
-void DeleteAccount(std::vector<User>& users, const std::string& login) {
+void DeleteAccount(const User& user, std::vector<User>& users, const std::string& login) {
     int position = SearchAccount(users, login);
-    Reader reader(ALL_USER_ACCOUNTS);
-    reader.DeleteObject({position}, users);
+
+    if (users[position].getAccess() > user.getAccess()) { // if user = Admin and he tries to delete Main Admin
+        const std::string& kError = "You cant delete Main Admin... hahahaha";
+        std::cout << '\n' << Paint(RED, kError) << '\n';
+    } else {
+        Reader reader(ALL_USER_ACCOUNTS);
+        reader.DeleteObject({position}, users);
+    }
 }
 
 void EditAccount(int& position, std::vector<User>& users) {

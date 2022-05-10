@@ -1,4 +1,6 @@
 #pragma once
+
+#include <conio.h>
 #include <string>
 #include <algorithm>
 #include <iostream>
@@ -24,7 +26,11 @@ std::string GetHash(const std::string& pass, const std::string& salt);
 
 bool CheckPassword(const std::string& password);
 
+std::string InputStarPassword(); // Password: ****** in console
+
 std::string InputPassword(std::istream& in, const std::string& mode);
+
+void ClearOutputAfterIncorrectPass(int&);
 
 std::ostream &operator<<(std::ostream &out, const Password& password);
 

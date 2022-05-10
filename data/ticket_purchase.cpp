@@ -17,16 +17,16 @@ bool BookTicket(Tickets &available_tickets, bool &isBooked) {
     std::cin >> type;
 
     if (type == "1") {
-        int amount_of_tickets = InputAmountTickets();
-        isBooked = BookEconomy(available_tickets, amount_of_tickets);
+        int amount_of_seats = InputAmountSeats();
+        isBooked = BookEconomy(available_tickets, amount_of_seats);
         if (!isBooked && isUserWantAnotherClass()) {
-            isBooked = BookBusiness(available_tickets, amount_of_tickets);
+            isBooked = BookBusiness(available_tickets, amount_of_seats);
         }
     } else if (type == "2") {
-        int amount_of_tickets = InputAmountTickets();
-        isBooked = BookBusiness(available_tickets, amount_of_tickets);
+        int amount_of_seats = InputAmountSeats();
+        isBooked = BookBusiness(available_tickets, amount_of_seats);
         if (!isBooked && isUserWantAnotherClass()) {
-            isBooked = BookEconomy(available_tickets, amount_of_tickets);
+            isBooked = BookEconomy(available_tickets, amount_of_seats);
         }
     } else {
         return true;

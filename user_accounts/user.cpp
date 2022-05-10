@@ -12,7 +12,7 @@ void User::BuyTickets(std::vector<Flight>& flights) {
 
     const auto &kSuccessBooked = "The Ticket was successfully booked!";
     const auto &kNotEnoughSeats = "There are not enough seats on this flight!\n"
-                                  "1 - Choose another flight\nelse - exit\t Your choice: ";
+                                  "1 - Choose another flight\nelse - exit\nYour choice: ";
 
     while(true) {
         int number = InputNumberOfFlight(flights.size());
@@ -31,12 +31,18 @@ void User::BuyTickets(std::vector<Flight>& flights) {
             reader.WriteIntoFile(flights);
             break;
         } else {
+            CLEAR_LINES(12); // clear output console stream
+            std::cout << '\n';
+
             std::cout << Paint(YELLOW, kNotEnoughSeats);
             std::string request;
             std::cin >> request;
             if (request != "1") {
                 return;
             }
+
+            CLEAR_LINES(5); // clear output console stream
+            std::cout << '\n';
         }
     }
 }
@@ -202,7 +208,6 @@ bool SignIn(std::vector<User>& accounts, User &user) {
         std::cout << kAccountNotFound << '\n';
     } else {
         std::string salt = (*it).getPassword().salt;
-        // TODO: *****************
         std::string password;
 
         // This try - catch if user input ':quit' to cancel password Input

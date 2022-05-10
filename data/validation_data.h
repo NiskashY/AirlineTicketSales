@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+#include <ctime>
 
 #include "../appearance/colors.h"
 #include "../check_num.h"
@@ -11,7 +12,7 @@ int InputAmountOfFlights();
 
 int InputNumberOfDeleted();
 
-int InputAmountTickets();
+int InputAmountSeats();
 
 // Number of Flight - number of flight in file 1, 2, ..., n
 int InputNumberOfFlight(const size_t &total_flights);
@@ -36,23 +37,27 @@ int InputPrice(std::istream &in, const std::string &class_type);
 
 void EnsureSymbol(std::stringstream& stream);
 
-void isDayCorrect(int& day);
+void isDayCorrect(int&);
 
-void isMonthCorrect(int& month);
+void isMonthCorrect(int&);
 
-void isYearCorrect(int& year);
+void isYearCorrect(int& );
 
-bool ParseDate(const std::string& date);
+std::string SetFormattedDate(const int&, const int&, const int&);
+
+bool ParseDate(std::string& date);
 
 std::string InputDate(std::istream &in);
 
 /*-------------- TIME VALIDATION ----------*/
 
-void isHoursCorrect(int &day);
+void isHoursCorrect(int &);
 
-void isMinutesCorrect(int &month);
+void isMinutesCorrect(int &);
 
-bool ParseTime(const std::string &date);
+bool ParseTime(std::string &);
+
+std::string SetFormattedTime(const int&, const int&);
 
 std::string InputTime(std::istream &in, const std::string& type_of_date);
 

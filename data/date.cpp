@@ -28,8 +28,8 @@ std::ostream &operator<<(std::ostream &out, const Date &date) {
 }
 
 bool operator==(const Date &lhs, const Date &rhs) {
-    return std::tie(lhs.departure_time_, lhs.departure_date_, lhs.arrival_time_)
-           == std::tie(rhs.departure_time_, rhs.departure_date_, rhs.arrival_time_);
+    return lhs.departure_time_ == rhs.departure_time_ && lhs.arrival_time_ == rhs.arrival_time_ ||
+           lhs.departure_date_ == rhs.departure_date_;
 }
 
 bool operator<(const Date &lhs, const Date &rhs) {

@@ -38,8 +38,8 @@ std::ostream &operator<<(std::ostream &out, const Tickets &tickets) {
 }
 
 bool operator==(const Tickets &lhs, const Tickets &rhs) {
-    return std::tie(lhs.price_of_economy_, lhs.available_in_economy_, lhs.price_of_business_, lhs.available_in_business_)
-           == std::tie(rhs.price_of_economy_, rhs.available_in_economy_, rhs.price_of_business_, rhs.available_in_business_);
+    return lhs.price_of_economy_ == rhs.price_of_economy_ && lhs.available_in_economy_ == rhs.available_in_economy_
+     || lhs.price_of_business_ == rhs.price_of_business_ && lhs.available_in_business_ ==  rhs.available_in_business_;
 }
 
 bool operator<(const Tickets &lhs, const Tickets &rhs) {

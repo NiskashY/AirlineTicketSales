@@ -1,5 +1,7 @@
 #include "validation_data.h"
 
+#pragma region input
+
 int InputEditedPosition() {
     const auto &kInputNumber = "Input position you want to edit: ";
     const auto &kInvalidAmount = "Position cant be less then 0. ReEnter: ";
@@ -35,9 +37,9 @@ int InputAmountOfFlights() {
     return amount;
 }
 
-int InputAmountTickets() {
-    const auto &kInputAmountTickets = "Input amount of tickets you want too book: ";
-    const auto &kErrorAmountOfTickets = "The number of tickets must be greater than 0!\nReEnter: ";
+int InputAmountSeats() {
+    const auto &kInputAmountTickets = "Input amount of seats you want too book: ";
+    const auto &kErrorAmountOfTickets = "The number of seats must be greater than 0!\nReEnter: ";
     const auto &kMinAmount = 1;
     int amount_of_tickets = 0;
 
@@ -78,6 +80,8 @@ int InputNumberOfFlight(const size_t &total_flights) {
 
     return number;
 }
+
+#pragma endregion
 
 #pragma region FlightsValidation
 
@@ -211,7 +215,25 @@ void isYearCorrect(int &year) {
     }
 }
 
-bool ParseDate(const std::string &date) {
+
+// Calls the date, which may contain values of type -2-, to -02-
+std::string SetFormattedDate(const int& day, const int& month, const int& year) {
+    char zero = '0';
+    char separator = '-';
+    std::string str_day = std::to_string(day);
+    if (day / 10 == 0) {
+        str_day = zero + str_day;
+    }
+    std::string str_month= std::to_string(month);
+    if (month / 10 == 0) {
+        str_month = zero + str_month;
+    }
+    std::string str_year = std::to_string(year);
+
+    return str_year + separator + str_month + separator + str_day;
+}
+
+bool ParseDate(std::string &date) {
     std::stringstream stream(date);
     const auto& kWrongFormat = "Wrong date! Allowed Format - XX-MM-YYYY.";
     int day = 0;
@@ -236,6 +258,7 @@ bool ParseDate(const std::string &date) {
         throw std::runtime_error(kWrongFormat);
     }
 
+    date = SetFormattedDate(day, month, year); // set old day in correct format
     return true;  // if we counted everything from the stream, and it is empty
 }
 
@@ -274,9 +297,26 @@ void isMinutesCorrect(int &month) {
     }
 }
 
-bool ParseTime(const std::string &date) {
+std::string SetFormattedTime(const int& hours, const int& minutes) {
+    char zero = '0';
+    char separator = '-';
+
+    std::string str_hours= std::to_string(hours);
+    if (hours / 10 == 0) {
+        str_hours = zero + str_hours; // 1- => 01-
+    }
+
+    std::string str_minutes = std::to_string(minutes);
+    if (minutes / 10 == 0) {
+        str_minutes = zero + str_minutes; // -1- => -01-
+    }
+
+    return str_hours + separator + str_minutes;
+}
+
+bool ParseTime(std::string &time) {
     const auto& kWrongFormat = "Wrong time! Allowed Format - HH-MM.";
-    std::stringstream stream(date);
+    std::stringstream stream(time);
     int hours = 0;
     int minutes = 0;
 
@@ -294,6 +334,8 @@ bool ParseTime(const std::string &date) {
     if (stream >> tmp) {
         throw std::runtime_error(kWrongFormat);
     }
+
+    time = SetFormattedTime(hours, minutes);
 
     return true;  // if we counted everything from the stream, and it is empty
 }

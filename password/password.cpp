@@ -38,8 +38,30 @@ bool CheckPassword(const std::string &password) {
     return std::all_of(password.begin(), password.end(), isBanned) && password.length() >= 8;
 }
 
+std::string InputStarPassword() { // Password: ****** in console
+    std::string password;
+    while (true) {
+        char c = getch();
+        if (c == 13) // Enter
+        {
+            if (password.length() != 0)
+                break;
+        } else if (c == 8) // Backspace
+        {
+            if (password.length() != 0) {
+                std::cout << "\b \b";
+                password.pop_back();
+            }
+        } else if (c != 32) {
+            password += c;
+            std::cout << '*';
+        }
+    }
+    std::cout << '\n';
+    return password;
+}
+
 std::string InputPassword(std::istream& in, const std::string& mode) {
-    // TODO: сделать ***** - это уже реализовать на WINDOWS
     const auto& kErrorMessage = "The password cannot contain /\\?*-+'\"!;()%#$@^ and spaces"
                                 "\nAnd should be more than 8 characters. ReEnter.";
     std::string password;
@@ -48,8 +70,9 @@ std::string InputPassword(std::istream& in, const std::string& mode) {
 
     do {
         std::cout << mode;
-        getline(in, password);
+        password = InputStarPassword();
         if (password == ":quit") {
+            ClearOutputAfterIncorrectPass(incorrect_passwords);
             throw std::runtime_error(":quit");
         }
         isPasswordCorrect = CheckPassword(password);
@@ -63,14 +86,19 @@ std::string InputPassword(std::istream& in, const std::string& mode) {
         }
     } while (!isPasswordCorrect);
 
+    ClearOutputAfterIncorrectPass(incorrect_passwords);
+
+    return password;
+}
+
+
+void ClearOutputAfterIncorrectPass(int& incorrect_passwords) {
     if (incorrect_passwords) {
         GO_DOWN_LINE();
         CLEAR_LINE();
         GO_UP_LINE();
         CLEAR_LINE();
     }
-
-    return password;
 }
 
 std::ostream &operator<<(std::ostream &out, const Password &password) {

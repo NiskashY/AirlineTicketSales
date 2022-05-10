@@ -26,7 +26,7 @@ std::ostream &operator<<(std::ostream &out, const Airplane &airplane) {
 }
 
 bool operator==(const Airplane& lhs, const Airplane& rhs) {
-    return std::tie(lhs.type_, lhs.capacity_) == std::tie(rhs.type_, rhs.capacity_);
+    return (lhs.type_ == rhs.type_ || lhs.capacity_ ==  rhs.capacity_);
 }
 
 bool operator<(const Airplane& lhs, const Airplane& rhs) {

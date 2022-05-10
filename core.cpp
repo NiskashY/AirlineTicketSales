@@ -1,12 +1,5 @@
 #include "core.h"
 
-void getch() {  // this is for linux-clion to prevent immediately closing after work is done.
-    std::string a;
-    std::cout << "\nPress enter to continue... ";
-    std::cin.get();
-    getline(std::cin, a);
-}
-
 bool isNeedToExit() {
     const auto& kSure = "Are you sure you want to exit? 1 - yes, else - no";
     const auto& kChoice = "Your choice: ";
@@ -23,7 +16,7 @@ void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
     bool isSignIn = false;
     User user;
     while (true) {
-        system("clear");
+        system("cls");
         if (!isSignIn) {
             ShowStartMenu();
             int tmp = 0;
@@ -38,15 +31,15 @@ void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
                 exit(EXIT_SUCCESS);
             }
         } else {
-            if (user.getAccess() == 2) {
+            if (user.getAccess() == 2 || user.getAccess() == 3) {
                 ShowAdminMainMenu();
                 int tmp = 0;
                 CheckNum(std::cin, tmp );
                 if (tmp == 1) {
                     AdminFlightSection(user, flights);
                 } else if (tmp == 2) {
-                    system("clear");
-                    AdminAccountSection(accounts, flights);
+                    system("cls");
+                    AdminAccountSection(user, accounts, flights);
                 } else {
                     isSignIn = isNeedToExit();
                 }
@@ -59,7 +52,7 @@ void Core(std::vector<User>& accounts, std::vector<Flight>& flights) {
                 }
             }
         }
-        getch();
+        system("pause");
     }
 }
 
@@ -107,7 +100,7 @@ void DefaultUserFlightSection(std::vector<Flight>& flights, User& user, int tmp)
 
 void AdminFlightSection(User &user, std::vector<Flight>& flights) {
     while (true) {
-        system("clear");
+        system("cls");
         ShowAdminFLightsSection();
         int tmp = 0;
         CheckNum(std::cin, tmp);
@@ -119,7 +112,7 @@ void AdminFlightSection(User &user, std::vector<Flight>& flights) {
                 break;
             }
             case 5: {
-                ShowFlights(flights);
+                user.ViewFlights(flights);
                 DeleteFlights(flights);
                 break;
             }
@@ -135,13 +128,13 @@ void AdminFlightSection(User &user, std::vector<Flight>& flights) {
             default:
                 return;
         }
-        getch();
+        system("pause");
     }
 }
 
-void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& flights) {
+void AdminAccountSection(User& user, std::vector<User>& accounts, std::vector<Flight>& flights) {
     while (true) {
-        system("clear");
+        system("cls");
         ShowAdminAccountsSection();
         int tmp = 0;
         CheckNum(std::cin, tmp);
@@ -169,7 +162,7 @@ void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& fligh
             }
             case 4 : {
                 std::string login = InputLogin(std::cin);
-                DeleteAccount(accounts, login);
+                DeleteAccount(user, accounts, login);
                 break;
             }
             case 5: {
@@ -185,6 +178,6 @@ void AdminAccountSection(std::vector<User>& accounts, std::vector<Flight>& fligh
             default:
                 return;
         }
-        getch();
+        system("pause");
     }
 }

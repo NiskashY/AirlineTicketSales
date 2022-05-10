@@ -1,18 +1,30 @@
 #include "core.h"
 #include "reader/reader.h"
 
-int main() {
-    Reader accountsReader(ALL_USER_ACCOUNTS);
-    Reader flightsReader(FLIGHTS_DATABASE);
+void ReadFiles(std::vector<User>& accounts, std::vector<Flight>& flights);
 
+int main() {
     std::vector<User> accounts;
     std::vector<Flight> flights;
+    ReadFiles(accounts, flights);
+
+    Core(accounts, flights);
+
+    system("pause");
+    return 0;
+}
+
+void ReadFiles(std::vector<User>& accounts, std::vector<Flight>& flights) {
+    Reader accountsReader(ALL_USER_ACCOUNTS);
+    Reader flightsReader(FLIGHTS_DATABASE);
 
     accountsReader.ReadFromFile(accounts);
     flightsReader.ReadFromFile(flights);
 
-    Core(accounts, flights);
-
-    getch();
-    return 0;
+    if (accounts.empty()) {
+        // if in accounts file empty - add Main Admin
+        User main_admin("admin", GenerateHashPassword("adminadmin"), 3);
+        accountsReader.AddObject(main_admin);
+        accounts.push_back(main_admin);
+    }
 }

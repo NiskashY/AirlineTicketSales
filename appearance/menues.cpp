@@ -1,7 +1,7 @@
 #include "menues.h"
 
 void ShowStartMenu() {
-    const auto &kSignIn = "1 - Sign in";
+    const auto &kSignIn = "1 - Sign In";
     const auto &kSignUp = "2 - Sign Up";
     const auto &kExit = "3 - exit";
     const auto& kChoice = "Your choice: ";

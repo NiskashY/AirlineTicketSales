@@ -1,8 +1,8 @@
 #include "reader.h"
 
 bool Reader::isFileNotEmpty() const {
-    std::ofstream file(kFileName_, std::ios::app);
-    bool isFileNotEmpty = file.tellp();
+    std::ifstream file(kFileName_);
+    bool isFileNotEmpty = (file.peek() != std::ifstream::traits_type::eof());
     file.close();
     return isFileNotEmpty;
 }

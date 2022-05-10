@@ -55,7 +55,7 @@ void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights) {
         Flight tmp;
         in >> tmp;
 
-        if (Compare(std::make_tuple(tmp.getFlightNumber(), tmp.getDestination()) , std::make_tuple(flight_number, destination))) {
+        if (tmp.getFlightNumber() == flight_number || tmp.getDestination() == destination) {
             matching_flights.push_back(tmp);
         }
     }
@@ -185,9 +185,12 @@ std::istream &operator>>(std::istream &in, Flight &flight) {
     } else {
         flight.destination_ = InputFlightDestination(in);
         flight.flight_number_ = InputFlightNumber(in);
-
-        in >> flight.airplane_ >> flight.date_;
+        std::cout << '\n';
+        in >> flight.airplane_;
+        std::cout << '\n';
+        in >> flight.date_;
         flight.tickets_.capacity = flight.airplane_.capacity_; // this is for correct amount of seats in tickets.
+        std::cout << '\n';
         in >> flight.tickets_;
     }
     return in;
@@ -199,8 +202,8 @@ bool operator==(const Flight &lhs, const Flight &rhs) {
 }
 
 bool operator<(const Flight &lhs, const Flight &rhs) {
-    return std::tie(lhs.flight_number_, lhs.destination_, lhs.airplane_, lhs.date_, lhs.tickets_)
-           < std::tie(rhs.flight_number_, rhs.destination_, rhs.airplane_, rhs.date_, rhs.tickets_);
+    return std::tie(lhs.destination_, lhs.flight_number_, lhs.airplane_, lhs.date_, lhs.tickets_)
+           < std::tie(rhs.destination_, rhs.flight_number_, rhs.airplane_, rhs.date_, rhs.tickets_);
 }
 
 #pragma endregion
