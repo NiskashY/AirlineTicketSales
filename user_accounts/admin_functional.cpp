@@ -79,7 +79,7 @@ bool descendingAccess(const User& lhs, const User& rhs) {
 std::vector<User> SortAccounts(std::vector<User> users, const int& parameter) {
     bool (*predicate)(const User&, const User&); // pointer to the function from above
     switch(parameter) {
-        case 1: {
+        case 1: default: {
             predicate = ascendingLogin;
             break;
         }
@@ -106,7 +106,7 @@ int SearchAccount(const std::vector<User>& users, const std::string& login) {
         return user.getLogin() == login;
     });
     if (it == users.end()) {
-        std::cout << kNotMatch << '\n';
+        std::cout << '\n' << Paint(RED, kNotMatch) << '\n';
         return -1; // user with this login doesn't exist
     } else {
         return int(it - users.begin() + 1);
@@ -116,12 +116,14 @@ int SearchAccount(const std::vector<User>& users, const std::string& login) {
 void DeleteAccount(const User& user, std::vector<User>& users, const std::string& login) {
     int position = SearchAccount(users, login);
 
-    if (users[position].getAccess() > user.getAccess()) { // if user = Admin and he tries to delete Main Admin
-        const std::string& kError = "You cant delete Main Admin... hahahaha";
-        std::cout << '\n' << Paint(RED, kError) << '\n';
-    } else {
-        Reader reader(ALL_USER_ACCOUNTS);
-        reader.DeleteObject({position}, users);
+    if (position > -1) { // if account exist.
+        if (users[position].getAccess() > user.getAccess()) { // if user = Admin and he tries to delete Main Admin
+            const std::string &kError = "You cant delete Main Admin... hahahaha";
+            std::cout << '\n' << Paint(RED, kError) << '\n';
+        } else {
+            Reader reader(ALL_USER_ACCOUNTS);
+            reader.DeleteObject({position}, users);
+        }
     }
 }
 
@@ -154,9 +156,7 @@ void EditAccount(int& position, std::vector<User>& users) {
             break;
         }
         case 3: {
-            const auto& kAccessMenu = "\nCurrent access - " + std::to_string(users[position].getAccess())
-                    + "\n1 - Increase access level\n2 - Decrease access level\n3 - Block User\nelse - back\nYour Choice: ";
-            std::cout << kAccessMenu;
+            ShowAccessMenu(std::to_string(users[position].getAccess()));
             int tmp = 0;
             CheckNum(std::cin, tmp);
             if (tmp == 1) {
@@ -168,7 +168,6 @@ void EditAccount(int& position, std::vector<User>& users) {
             } else {
                 return;
             }
-
         }
         default: {
             return;

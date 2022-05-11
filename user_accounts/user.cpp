@@ -48,7 +48,7 @@ void User::BuyTickets(std::vector<Flight>& flights) {
 }
 
 Parameter GetParameter() {
-    const auto &kInput = "Input Parameter for your operation\n1 - FullFlights\n"
+    const auto &kInput = "Input Parameter for your operation\n1 - Flights\n"
                          "2 - Airplanes\n3 - Date\n4 - Tickets\nYour choice: ";
     const auto &kErrorPosition = "Your parameter should be [1; 4]. ReEnter:";
     const std::vector<Parameter> parameter_vec = {Parameter::Flight, Parameter::Airplane, Parameter::Date,
@@ -139,10 +139,29 @@ bool isLoginExist(std::vector<User>& all_users, const std::string &login) {
 }
 
 std::string InputLogin(std::istream &in) {
-    const auto &kInputLogin = "Input login: ";
+    const std::string &kInputLogin = "Input login: ";
+    const auto &kError = "Login can't contain spaces and be empty";
+
     std::string login;
-    std::cout << kInputLogin;
-    getline(in, login);
+    int wrong_login = 0;
+    bool isError = false;
+    do {
+        std::cout << kInputLogin;
+        getline(in, login);
+        isError = (login.empty() || login.find(' ') != std::string::npos);
+        if (isError) {
+            std::cout << Paint(RED, kError);
+            wrong_login++;
+            GO_UP_LINE();
+            CLEAR_LINE();
+            GO_TO_COLUMN(0);
+        }
+    } while (isError);
+
+    if (wrong_login) {
+        CLEAR_LINE();
+    }
+
     return login;
 }
 

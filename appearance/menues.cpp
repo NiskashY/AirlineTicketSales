@@ -181,3 +181,18 @@ void ShowAccountMenuSort() {
     std::cout << kDescendingAccess << '\n';
     std::cout << kBack;
 }
+
+void ShowAccessMenu(const std::string& access) {
+
+    std::string colored_access = Paint(BLUE, access);
+    if (access == "1") {
+        colored_access = Paint(GREEN, access);
+    } else if (access == "2") {
+        colored_access = Paint(RED, access);
+    }
+
+    const auto &kAccessMenu = "\nCurrent access - " + colored_access
+                              + "\n1 - Increase access level\n2 - Decrease access level"
+                                "\n3 - Block User\nelse - back\nYour Choice: ";
+    std::cout << kAccessMenu;
+}

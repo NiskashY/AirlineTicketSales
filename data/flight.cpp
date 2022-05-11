@@ -109,6 +109,7 @@ void SearchDate(std::istream& in, std::vector<Flight>& matching_flights) {
 
 void SearchTickets(std::istream& in, std::vector<Flight>& matching_flights) {
     Tickets tickets;
+    tickets.capacity = 853; // max amount of tickets you can input
     std::cin >> tickets;
 
     while (!in.eof()) {

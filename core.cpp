@@ -161,6 +161,9 @@ void AdminAccountSection(User& user, std::vector<User>& accounts, std::vector<Fl
                 break;
             }
             case 4 : {
+                const auto& kSection = "\n----Delete Section---\n";
+                ViewUsers(accounts);
+                std::cout << Paint(YELLOW, kSection);
                 std::string login = InputLogin(std::cin);
                 DeleteAccount(user, accounts, login);
                 break;
