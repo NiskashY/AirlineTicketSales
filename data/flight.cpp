@@ -39,23 +39,35 @@ void ShowFlights(const std::vector<Flight> &flights) {
 
 #pragma region SearchSection
 
+void ToLower(std::string& str) {
+    for (auto& i : str) {
+        i = (char)tolower(i);
+    }
+}
+
+// only rhs can be part of lhs
+bool StringWithoutCaseCompare(std::string lhs, std::string rhs) {
+
+    ToLower(lhs);
+    ToLower(rhs);
+
+    bool isPart = lhs.find(rhs) != std::string::npos;
+
+    return isPart;
+}
+
 void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights) {
-    const auto& kInputDestination = "Input Flight Destination: ";
-    const auto& kInputNumber = "Input Flight Number: ";
-
-    int flight_number;
-    std::string destination;
-
-    std::cout << kInputDestination;
-    std::cin >> destination;
-    std::cout << kInputNumber;
-    CheckNum(std::cin, flight_number);
+    std::string destination = InputFlightDestination(std::cin);
+    int flight_number = InputFlightNumber(std::cin);
 
     while (!in.eof()) {
         Flight tmp;
         in >> tmp;
 
-        if (tmp.getFlightNumber() == flight_number || tmp.getDestination() == destination) {
+        // Compare destination independently of case of letters and check if it is part of ...
+        bool isMatch = StringWithoutCaseCompare(tmp.getDestination(), destination);
+
+        if (tmp.getFlightNumber() == flight_number || isMatch) {
             matching_flights.push_back(tmp);
         }
     }
@@ -88,7 +100,10 @@ void SearchAirplane(std::istream& in, std::vector<Flight>& matching_flights) {
     while (!in.eof()) {
         Flight tmp;
         in >> tmp;
-        if (Compare(tmp.getAirplane(), airplane)){
+
+        bool isMatch = StringWithoutCaseCompare(tmp.getAirplane().type_, airplane.type_);
+
+        if (Compare(tmp.getAirplane(), airplane) || isMatch){
             matching_flights.push_back(tmp);
         }
     }

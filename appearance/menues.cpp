@@ -1,11 +1,13 @@
 #include "menues.h"
 
 void ShowStartMenu() {
+    const auto &kStartMenu = "-------Start Menu-------";
     const auto &kSignIn = "1 - Sign In";
     const auto &kSignUp = "2 - Sign Up";
     const auto &kExit = "3 - exit";
     const auto& kChoice = "Your choice: ";
-    std::cout << kSignIn << '\n'
+    std::cout << Paint(YELLOW, kStartMenu) << '\n'
+              << kSignIn << '\n'
               << kSignUp << '\n'
               << kExit   << '\n'
               << kChoice;

@@ -10,7 +10,6 @@ int main() {
 
     Core(accounts, flights);
 
-    system("pause");
     return 0;
 }
 

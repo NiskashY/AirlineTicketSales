@@ -73,6 +73,12 @@ void ShowFlight(const Flight&);
 
 void ShowFlights(const std::vector<Flight>& vec);
 
+#pragma region SearchSection
+
+void ToLower(std::string& );
+
+bool StringWithoutCaseCompare(std::string, std::string);
+
 void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights);
 
 void SearchFullFlight(std::istream& in, std::vector<Flight>& matching_flights);
@@ -87,6 +93,8 @@ template <class T>
 bool Compare(const T& lhs, const T& rhs) {
     return lhs == rhs;
 }
+
+#pragma endregion
 
 std::ostream& operator<<(std::ostream& file, const Flight& flight);
 

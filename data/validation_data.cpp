@@ -105,34 +105,38 @@ int InputFlightNumber(std::istream &in) {
 
 std::string InputFlightDestination(std::istream &in) {
     const auto &kInputDestination = "Input Flight Destination: ";
-    const auto &kErrorMessage = "Word is too long(length > 16). ReEnter: ";
+    const auto &kErrorMessage = "Word is too long(length > 16) or has spaces. ReEnter: ";
     const int &kMaxLength = 16;
     std::string destination;
 
     std::cout << kInputDestination;
+    bool isError = false;
     do {
         getline(in, destination);
-        if (destination.length() > kMaxLength) {
-            std::cout << kErrorMessage;
+        isError = destination.length() > kMaxLength || destination.find(' ') != std::string::npos;
+        if (isError) {
+            std::cout << Paint(RED, kErrorMessage);
         }
-    } while (destination.length() > kMaxLength);
+    } while (isError);
 
     return destination;
 }
 
 std::string InputAirplaneType(std::istream &in) {
     const auto &kInputDestination = "Input Airplane type: ";
-    const auto &kErrorMessage = "Word is too long(length > 16). ReEnter: ";
+    const auto &kErrorMessage = "Word is too long(length > 16) or has spaces. ReEnter: ";
     const int &kMaxLength = 16;
     std::string type;
 
     std::cout << kInputDestination;
+    bool isError = false;
     do {
         getline(in, type);
-        if (type.length() > kMaxLength) {
-            std::cout << kErrorMessage;
+        isError = type.length() > kMaxLength || type.find(' ') != std::string::npos;
+        if (isError) {
+            std::cout << Paint(RED, kErrorMessage);
         }
-    } while (type.length() > kMaxLength);
+    } while (isError);
 
     return type;
 }
@@ -360,4 +364,3 @@ std::string InputTime(std::istream &in, const std::string& type_of_date) {
 }
 
 #pragma endregion
-
