@@ -5,25 +5,20 @@
 #include "width.h"
 #include "colors.h"
 
-void ShowFlightsViewHeader();
+void ShowFlightsViewHeader(); // отображает заголовок таблицы рейсов
 
-void ShowAccountViewHeader();
+void ShowAccountViewHeader(); // отображает заголовок таблицы аккаунтов
 
-void ShowFlightViewSection();
+void ShowStartMenu(); // отображает начальное меню
 
-void ShowStartMenu();
+void ShowFlightsSection(); // отображает меню рейсов
 
-void ShowFlightsSection();
+void ShowAdminMainMenu(); // отображает меню админа
 
-void ShowAdminMainMenu();
+void ShowAdminFLightsSection(); // отображает меню рейсов с возможностями админа
 
-// TODO: СДЕЛАТЬ ВЫБОР КАКОЕ ПОЛЕ Я ХОЧУ ОТРЕДАКТИРОВАТЬ
-void ShowAdminFLightsSection();
+void ShowAdminAccountsSection(); // отображает меню аккаунтов
 
-void ShowAdminAccountsSection();
+void ShowAccountMenuSort(); // отображает меню сортировки аккаунтов
 
-void ShowAccountMenuSort();
-
-void PasswordMenu();
-
-void ShowAccessMenu(const std::string&);
+void ShowAccessMenu(const std::string&); // отображает меню при изменении доступа пользователя

@@ -19,7 +19,7 @@ struct Tickets {
     int price_of_economy_ = 0;
 };
 
-void ShowTickets(const Tickets&);
+void ShowTickets(const Tickets&); // отобразить информацию о билетах
 
 std::istream &operator>>(std::istream &in, Tickets &tickets);
 

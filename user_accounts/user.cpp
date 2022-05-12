@@ -31,7 +31,7 @@ void User::BuyTickets(std::vector<Flight>& flights) {
             reader.WriteIntoFile(flights);
             break;
         } else {
-            CLEAR_LINES(12); // clear output console stream
+            CLEAR_LINES_ABOVE(11); // clear output console stream
             std::cout << '\n';
 
             std::cout << Paint(YELLOW, kNotEnoughSeats);
@@ -41,7 +41,7 @@ void User::BuyTickets(std::vector<Flight>& flights) {
                 return;
             }
 
-            CLEAR_LINES(5); // clear output console stream
+            CLEAR_LINES_ABOVE(4); // clear output console stream
             std::cout << '\n';
         }
     }
@@ -71,7 +71,7 @@ std::vector<Flight> User::SearchFlights() {
 
     // Parameter - what information we want to find
     switch (GetParameter()) {
-        case Parameter::Flight : {
+        case Parameter::Flight : default: {
             SearchPartFlight(in, matching_flights);
             break;
         }
@@ -86,9 +86,6 @@ std::vector<Flight> User::SearchFlights() {
         case Parameter::Tickets: {
             SearchTickets(in, matching_flights);
             break;
-        }
-        default : {
-            SearchFullFlight(in, matching_flights);
         }
     }
 
@@ -129,7 +126,7 @@ std::vector<Flight> User::SortFlights(std::vector<Flight> data) {
 
 #pragma region SignInSignUp
 
-bool isLoginExist(std::vector<User>& all_users, const std::string &login) {
+bool isLoginUnique(std::vector<User>& all_users, const std::string &login) {
     if (std::find_if(all_users.begin(), all_users.end(), [login](const User& user) {
         return user.getLogin() == login;
     }) != all_users.end()) {
@@ -152,9 +149,7 @@ std::string InputLogin(std::istream &in) {
         if (isError) {
             std::cout << Paint(RED, kError);
             wrong_login++;
-            GO_UP_LINE();
-            CLEAR_LINE();
-            GO_TO_COLUMN(0);
+            CLEAR_LINES_ABOVE(1);
         }
     } while (isError);
 
@@ -180,30 +175,45 @@ int InputAccess(std::istream& in) {
 }
 
 User CreateNewUser(std::vector<User>& all_users) {
-    const auto &kLoginExist = "Login already exist!. ReEnter: ";
-    const std::string& kInput = "Input ";
-    const std::string& kConfirm = "Confirm ";
-    const std::string& kPassword = "Password(':quit' - cancel): ";
+    const std::string &kLoginExist = "Login already exist!.";
+    const std::string &kInput = "Input ";
+    const std::string &kConfirm = "Confirm ";
+    const std::string &kPassword = "Password(':quit' - cancel): ";
 
     bool isExist = true;
+    int wrong_ = 0; // if we enter wrong data -> i need to know that to correct clear lines
+
     std::string login;
     do {
         login = InputLogin(std::cin);
-        isExist = isLoginExist(all_users, login);
+        isExist = isLoginUnique(all_users, login);
         if (isExist) {
-            std::cout << kLoginExist;
+            std::cout << Paint(RED, kLoginExist);
+            wrong_++;
+            CLEAR_LINES_ABOVE(1);
         }
     } while (isExist);
 
+    if (wrong_) {
+        CLEAR_LINE();
+    }
+
+    wrong_ = 0;
     std::string password;
     std::string password_confirm;
     do {
         password = InputPassword(std::cin, kInput + kPassword);
         password_confirm = InputPassword(std::cin, kConfirm + kPassword);
         if (password != password_confirm) {
-            std::cout << "Password not equal!\n";
+            std::cout << Paint(RED, "Passwords not equal! ReEnter!");
+            wrong_++;
+            CLEAR_LINES_ABOVE(2);
         }
     } while (password != password_confirm);
+
+    if (wrong_) {
+        CLEAR_LINE();
+    }
 
     const int &access = 0;
     return {login, GenerateHashPassword(password), access};

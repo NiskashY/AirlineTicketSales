@@ -13,6 +13,9 @@
 #define ERROR_OPEN_FILE "ERROR: failed to open file"
 #define FILE_IS_EMPTY "FILE: empty file"
 
+#define ALL_USER_ACCOUNTS "user_accounts.txt"
+#define FLIGHTS_DATABASE "flights_database.txt"
+
 // Файл flights_database.txt находится в папке cmake-build-debug
 
 class Reader {

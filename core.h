@@ -20,3 +20,5 @@ void AdminFlightSection(User&, std::vector<Flight>&);
 void DefaultUserFlightSection(std::vector<Flight>& flights, User& user, int tmp = -1);
 
 void AdminAccountSection(User&, std::vector<User>&, std::vector<Flight>&);
+
+void ReadFiles(std::vector<User>& accounts, std::vector<Flight>& flights);

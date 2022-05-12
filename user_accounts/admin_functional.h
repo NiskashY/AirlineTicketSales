@@ -4,38 +4,32 @@
 
 #pragma region accounts
 
-void AddUser(std::vector<User>&, const User &);
+void AddUser(std::vector<User>&, const User &); // добавить пользователя
 
-void IncreaseAccessLevel(User& user);
+void ShowUser(const User& user); // отобразить информацию о пользователе
 
-void AddUser(const User& user);
+void ViewUsers(const std::vector<User>& accounts); // отобразить всех пользователей
 
-void ShowUser(const User& user);
+std::vector<User> SortAccounts(std::vector<User> users, const int& parameter); // сортировка аккаунтов
 
-void ViewUsers(const std::vector<User>& accounts);
+int SearchAccount(const std::vector<User>& users, const std::string& login); // поиск аккаунтов
 
-void ViewUsers();
+void DeleteAccount(const User&, std::vector<User>&, const std::string&); // удаление аккаунтов
 
-std::vector<User> SortAccounts(std::vector<User> users, const int& parameter);
+void EditAccount(User& user, int& position, std::vector<User>& users); // редактирование аккаунтов
 
-int SearchAccount(const std::vector<User>& users, const std::string& login);
-
-void DeleteAccount(const User&, std::vector<User>&, const std::string&);
-
-void EditAccount(int& position, std::vector<User>& users);
-
-void IncreaseAccessLevel(const int &position, std::vector<User> &users);
-void DecreaseAccessLevel(const int &position, std::vector<User> &users);
-void BlockAccount(const int &position, std::vector<User> &users);
+void IncreaseAccessLevel(User& user); // увеличить уровень доступа
+void DecreaseAccessLevel(User& user); // уменьшить уровень доступа
+void BlockAccount(User& user); // блокировка аккаунта
 
 #pragma endregion
 
 #pragma region flights
 
-void DeleteFlights(std::vector<Flight>&);
+void DeleteFlights(std::vector<Flight>&); // удаление рейса
 
-void EditFlights(std::vector<Flight>&);
+void EditFlights(std::vector<Flight>&); // редактирование рейса
 
-void AddFlights(std::vector<Flight>& );
+void AddFlights(std::vector<Flight>& ); // добавление рейса
 
 #pragma endregion

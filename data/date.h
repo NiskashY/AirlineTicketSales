@@ -15,7 +15,7 @@ struct Date {
     std::string arrival_time_;
 };
 
-void ShowDate(const Date&);
+void ShowDate(const Date&); // отобразить информацию о дате
 
 std::istream &operator>>(std::istream &in, Date &date);
 

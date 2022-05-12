@@ -127,7 +127,7 @@ void DeleteAccount(const User& user, std::vector<User>& users, const std::string
     }
 }
 
-void EditAccount(int& position, std::vector<User>& users) {
+void EditAccount(User& user,int& position, std::vector<User>& users) {
     User old_user;
     --position;
     try {
@@ -135,6 +135,12 @@ void EditAccount(int& position, std::vector<User>& users) {
     } catch( std::out_of_range& e) {
         const auto& kInvalidNumber = "The Information with this number does not exist";
         std::cout << Paint(RED, kInvalidNumber) << '\n';
+        return;
+    }
+
+    if (old_user.getAccess() == 3 && user.getAccess() != 3) {
+        const auto& kMainAdmin = "You cant edit main admin)";
+        std::cout << Paint(YELLOW, kMainAdmin) << '\n';
         return;
     }
 
@@ -156,44 +162,46 @@ void EditAccount(int& position, std::vector<User>& users) {
             break;
         }
         case 3: {
-            ShowAccessMenu(std::to_string(users[position].getAccess()));
+            ShowAccessMenu(std::to_string(old_user.getAccess()));
             int tmp = 0;
             CheckNum(std::cin, tmp);
             if (tmp == 1) {
-                IncreaseAccessLevel(position, users);
+                IncreaseAccessLevel(old_user);
             } else if (tmp == 2) {
-                DecreaseAccessLevel(position, users);
+                DecreaseAccessLevel(old_user);
             } else if (tmp == 3) {
-                BlockAccount(position, users);
+                BlockAccount(old_user);
             } else {
                 return;
             }
+            break;
         }
         default: {
             return;
         }
     }
+    users[position] = old_user;
     reader.WriteIntoFile(users);
     std::cout << Paint(GREEN, "\tDone!") << '\n';
 }
 
-void IncreaseAccessLevel(const int &position, std::vector<User> &users) {
-    int access_before = users[position].getAccess();
-    if (access_before != 2) {
-        users[position].setAccess(++access_before);
+void IncreaseAccessLevel(User& user) {
+    int access_before = user.getAccess();
+    if (access_before < 2) {
+        user.setAccess(++access_before);
     }
 }
 
-void DecreaseAccessLevel(const int &position, std::vector<User> &users) {
-    int access_before = users[position].getAccess() ;
-    if (access_before != 0) {
-        users[position].setAccess(--access_before);
+void DecreaseAccessLevel(User& user)  {
+    int access_before = user.getAccess() ;
+    if (access_before > 0) {
+        user.setAccess(--access_before);
     }
 }
 
-void BlockAccount(const int &position, std::vector<User> &users) {
+void BlockAccount(User& user)  {
     int blocked_access = 0;
-    users[position].setAccess(blocked_access);
+    user.setAccess(blocked_access);
 }
 
 #pragma endregion

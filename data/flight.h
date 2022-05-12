@@ -65,32 +65,30 @@ public:
 
 };
 
-Parameter GetParameter();
+Parameter GetParameter(); // получить параметр по которому выбираем рейс
 
-std::vector<Flight> CreateFlights();
+std::vector<Flight> CreateFlights(); // создание рейса
 
-void ShowFlight(const Flight&);
+void ShowFlight(const Flight&); // отображение одного рейса
 
-void ShowFlights(const std::vector<Flight>& vec);
+void ShowFlights(const std::vector<Flight>& vec); // отображение всех рейсов
 
 #pragma region SearchSection
 
-void ToLower(std::string& );
+void ToLower(std::string& ); // привести строку в нижнему регистру
 
-bool StringWithoutCaseCompare(std::string, std::string);
+bool StringWithoutCaseCompare(std::string, std::string); // сравнить две строки по части слова, не взирая на регист
 
-void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights);
+void SearchPartFlight(std::istream& in, std::vector<Flight>& matching_flights); // искать рейс по пункту назначения и номеру
 
-void SearchFullFlight(std::istream& in, std::vector<Flight>& matching_flights);
+void SearchAirplane(std::istream& in, std::vector<Flight>& matching_flights); // искать рейс по самолёту
 
-void SearchAirplane(std::istream& in, std::vector<Flight>& matching_flights);
+void SearchDate(std::istream& in, std::vector<Flight>& matching_flights); // искать рейс по дате
 
-void SearchDate(std::istream& in, std::vector<Flight>& matching_flights);
-
-void SearchTickets(std::istream& in, std::vector<Flight>& matching_flights);
+void SearchTickets(std::istream& in, std::vector<Flight>& matching_flights); // искать рейс по билетам
 
 template <class T>
-bool Compare(const T& lhs, const T& rhs) {
+bool Compare(const T& lhs, const T& rhs) { // сравнение двух типов данных
     return lhs == rhs;
 }
 

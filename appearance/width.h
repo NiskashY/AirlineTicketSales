@@ -24,6 +24,6 @@ namespace width {
 
 #pragma endregion
 
-    std::string CenterString(const std::string& str, const int& width);
+    std::string CenterString(const std::string& str, const int& width); // центрирует строку
 }
 

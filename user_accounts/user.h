@@ -8,10 +8,6 @@
 #include "../appearance/menues.h"
 #include "../appearance/colors.h"
 
-#define ALL_USER_ACCOUNTS "user_accounts.txt"
-#define FLIGHTS_DATABASE "flights_database.txt"
-
-// Manipulation of cursor in console
 
 class User {
 private:
@@ -30,9 +26,9 @@ public:
 
     void BuyTickets(std::vector<Flight>&);
 
-    std::vector<Flight> SearchFlights();
+    std::vector<Flight> SearchFlights(); // Search in File without reading data into vector
 
-    std::vector<Flight> SortFlights(std::vector<Flight>);
+    std::vector<Flight> SortFlights(std::vector<Flight>); // Return Sorted vector of flights
 
     // ---Getters ad setters---
     int getAccess() const;
@@ -54,15 +50,15 @@ public:
 
 };
 
-bool isLoginExist(std::vector<User>&, const std::string &);
+bool isLoginUnique(std::vector<User>&, const std::string &); // является ли логин уникальным
 
-std::string InputLogin(std::istream &in);
+std::string InputLogin(std::istream &in); // ввод логина
 
-User CreateNewUser(std::vector<User>&);
+User CreateNewUser(std::vector<User>&); // создание нового пользователя
 
-bool SignIn(std::vector<User>&, User &);
+bool SignIn(std::vector<User>&, User &); // вход
 
-void SignUp(std::vector<User>&);
+void SignUp(std::vector<User>&); // регистрация
 
 std::istream& operator>>(std::istream& in, User& user);
 

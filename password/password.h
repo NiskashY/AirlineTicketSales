@@ -18,19 +18,17 @@ struct Password {
 
 bool operator==(std::string& pass, const Password& hash_password);
 
-Password GenerateHashPassword(const std::string& pass);
+Password GenerateHashPassword(const std::string& pass); // генерация нового хэшированного пароля
 
-std::string GenerateSalt();
+std::string GenerateSalt(); // генерация соли
 
-std::string GetHash(const std::string& pass, const std::string& salt);
+std::string GetHash(const std::string& pass, const std::string& salt); // получить хэшированный пароль из двух строк (соли и пароля-строки)
 
-bool CheckPassword(const std::string& password);
-
-std::string InputStarPassword(); // Password: ****** in console
+bool CheckPassword(const std::string& password); // проверить валидный ли пароль
 
 std::string InputPassword(std::istream& in, const std::string& mode);
 
-void ClearOutputAfterIncorrectPass(int&);
+void ClearOutputAfterIncorrectPass(int&); // очистка консоли после неправильно введенного пароля
 
 std::ostream &operator<<(std::ostream &out, const Password& password);
 

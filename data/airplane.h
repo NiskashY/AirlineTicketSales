@@ -14,7 +14,7 @@ struct Airplane {
     int capacity_ = 0;
 };
 
-void ShowAirplane(const Airplane&);
+void ShowAirplane(const Airplane&); // отобразить информацию о самолёте
 
 std::istream& operator>> (std::istream& in, Airplane& airplane);
 

@@ -146,18 +146,22 @@ void AdminAccountSection(User& user, std::vector<User>& accounts, std::vector<Fl
                 if (tmp == 3) {
                     int position = 0;
                     position = InputEditedPosition();
-                    EditAccount(position, accounts);
+                    EditAccount(user, position, accounts);
                 }
                 break;
             }
             case 2: {
                 const auto& kNewUser = "NEW USER:";
+                const std::string& kSuccess = "Account successfully added!";
+
                 std::cout << Paint(YELLOW, kNewUser) << '\n';
                 try {
                     AddUser(accounts, CreateNewUser(accounts));
                 } catch(std::runtime_error& e) {
                     std::cout << Paint(BLUE, "back")     << '\n';
+                    break;
                 }
+                std::cout << Paint(GREEN, kSuccess) << '\n';
                 break;
             }
             case 4 : {
@@ -182,5 +186,20 @@ void AdminAccountSection(User& user, std::vector<User>& accounts, std::vector<Fl
                 return;
         }
         system("pause");
+    }
+}
+
+void ReadFiles(std::vector<User> &accounts, std::vector<Flight> &flights) {
+    Reader accountsReader(ALL_USER_ACCOUNTS);
+    Reader flightsReader(FLIGHTS_DATABASE);
+
+    accountsReader.ReadFromFile(accounts);
+    flightsReader.ReadFromFile(flights);
+
+    if (accounts.empty()) {
+        // if in accounts file empty - add Main Admin
+        User main_admin("admin", GenerateHashPassword("adminadmin"), 3);
+        accountsReader.AddObject(main_admin);
+        accounts.push_back(main_admin);
     }
 }

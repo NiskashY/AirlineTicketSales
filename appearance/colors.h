@@ -14,6 +14,6 @@
 #define BACK_RED "\033[41m"
 #define RESET_COLOR "\033[0m"
 
-std::string Paint(const std::string& color, const std::string& phrase);
+std::string Paint(const std::string& color, const std::string& phrase);  // закрашивает строку в определенный цвет
 
-void CLEAR_LINES(const int& amount);
+void CLEAR_LINES_ABOVE(const int& amount); // очищает несколько линий сверху от курсора
