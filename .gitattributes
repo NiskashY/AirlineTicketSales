@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 /cmake-build-debug/Makefile.in linguist-generated=true
+=======
+cmake-build-debug/Makefile linguist-generated=true
+>>>>>>> 3da7439ef281d2e3a1af2241d740a47057d4f894
