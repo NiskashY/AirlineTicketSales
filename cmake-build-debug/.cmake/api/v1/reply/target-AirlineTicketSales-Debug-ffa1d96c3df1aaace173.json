@@ -27,7 +27,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 34,
+				"line" : 35,
 				"parent" : 0
 			}
 		]
@@ -38,7 +38,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -g"
+					"fragment" : "-g"
 				},
 				{
 					"fragment" : "-std=gnu++17"
@@ -80,7 +80,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -g",
+				"fragment" : "-g",
 				"role" : "flags"
 			},
 			{

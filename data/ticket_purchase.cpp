@@ -32,6 +32,12 @@ bool BookTicket(Tickets &available_tickets, bool &isBooked) {
         return true;
     }
 
+    if (!isBooked) {
+        const auto& kNotEnough = "There are not enough seats on this flight!";
+        std::cout << Paint(YELLOW, kNotEnough) << '\n';
+        system("pause");
+    }
+
     return false;
 }
 

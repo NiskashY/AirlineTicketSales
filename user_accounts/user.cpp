@@ -11,8 +11,7 @@ void User::BuyTickets(std::vector<Flight>& flights) {
     Reader reader("flights_database.txt");
 
     const auto &kSuccessBooked = "The Ticket was successfully booked!";
-    const auto &kNotEnoughSeats = "There are not enough seats on this flight!\n"
-                                  "1 - Choose another flight\nelse - exit\nYour choice: ";
+    const auto &kChooseMenu = "1 - Choose another flight\nelse - exit\nYour choice: ";
 
     while(true) {
         int number = InputNumberOfFlight(flights.size());
@@ -31,17 +30,17 @@ void User::BuyTickets(std::vector<Flight>& flights) {
             reader.WriteIntoFile(flights);
             break;
         } else {
-            CLEAR_LINES_ABOVE(11); // clear output console stream
+            CLEAR_LINES_ABOVE(12); // clear output console stream
             std::cout << '\n';
 
-            std::cout << Paint(YELLOW, kNotEnoughSeats);
+            std::cout << Paint(YELLOW, kChooseMenu);
             std::string request;
             std::cin >> request;
             if (request != "1") {
                 return;
             }
 
-            CLEAR_LINES_ABOVE(4); // clear output console stream
+            CLEAR_LINES_ABOVE(6); // clear output console stream
             std::cout << '\n';
         }
     }
