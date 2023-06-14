@@ -2,6 +2,12 @@
 Console app with admin and users accounts. You can buy, track and seerach for airpline tickets. (Information stored in files in computer)
 
 ---
+<b> BUILD
+
+cmake -S . -B build
+cmake --build build
+
+---
 
 <b>DESCRIPTION OF THE PROGRAM OPERATION
 
